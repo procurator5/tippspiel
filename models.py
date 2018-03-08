@@ -6,7 +6,7 @@ from django.utils import timezone
 
 class Player(models.Model):
     """A player is a user in the context of the tippspiel."""
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete=models.DO_NOTHING,)
     score = models.IntegerField("The player's score.", default=0)
     rank = models.IntegerField("The player's rank", default=1)
 
@@ -48,8 +48,8 @@ class Match(models.Model):
     """A match between two teams."""
     date = models.DateTimeField()
     matchday = models.IntegerField(default=0)
-    team_home = models.ForeignKey(Team, related_name='+')
-    team_visitor = models.ForeignKey(Team, related_name='+')
+    team_home = models.ForeignKey(Team, related_name='+', on_delete=models.DO_NOTHING)
+    team_visitor = models.ForeignKey(Team, related_name='+', on_delete=models.DO_NOTHING)
     score_home = models.IntegerField(default=-1)
     score_visitor = models.IntegerField(default=-1)
 
@@ -64,8 +64,8 @@ class Match(models.Model):
 
 class Tipp(models.Model):
     """A bet by a player on a match."""
-    player = models.ForeignKey(Player)
-    match = models.ForeignKey(Match)
+    player = models.ForeignKey(Player, on_delete=models.DO_NOTHING)
+    match = models.ForeignKey(Match, on_delete=models.DO_NOTHING)
     date = models.DateTimeField()
     score_home = models.IntegerField(default=0)
     score_visitor = models.IntegerField(default=0)

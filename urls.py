@@ -1,42 +1,42 @@
-from django.conf.urls import patterns, url
-from django.contrib.auth import views
+from django.conf.urls import url
+from django.contrib.auth import views as auth
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView, ListView, TemplateView
-
 from tippspiel.models import Player, Team, Match, Tipp
+from tippspiel.views import *
 
 
-urlpatterns = patterns('django.contrib.auth',
+urlpatterns = [
     url(
         r'^login/$',
-        'views.login',
+        auth.login,
         {
             'template_name': 'tippspiel/login.html'
         },
-        name="login"
+        name='login'
     ),
    
     url(
         r'^logout/$',
-        'views.logout_then_login',
+        auth.logout_then_login,
         name="logout"
     ),
     
     url(
         r'^changepw/$',
-        'views.password_change',
+        auth.password_change,
         {
             'template_name': 'tippspiel/password_change.html',
             'post_change_redirect' : '/tippspiel/settings/'
         },
         name="password_change"
     ),
-)
+]
 
-urlpatterns += patterns('tippspiel.views',
+urlpatterns += [
     url(
         r'^$',
-        'overview',
+        overview,
         name="tippspiel_overview"
     ),
 
@@ -52,7 +52,7 @@ urlpatterns += patterns('tippspiel.views',
 
     url(
         r'^matchday/(?P<matchday_number>\d+)/$',
-        'matchday_detail',
+        matchday_detail,
         name="tippspiel_matchday_detail"
     ),
 
@@ -67,7 +67,7 @@ urlpatterns += patterns('tippspiel.views',
 
     url(
         r'^match/(?P<match_id>\d+)/$',
-        'match_detail',
+        match_detail,
         name="tippspiel_match_detail"
     ),
 
@@ -83,20 +83,20 @@ urlpatterns += patterns('tippspiel.views',
 
     url(
         r'^player/(?P<player_name>\w+)/$',
-        'player_detail',
+        player_detail,
         name="tippspiel_player_detail"
     ),
 
     url(
         r'^settings/$',
-        'settings',
+        settings,
         name="tippspiel_settings"
     ),
 
     url(
         r'update_scores_and_ranks/$',
-        'update_scores_and_ranks',
+        update_scores_and_ranks,
         name="tippspiel_staff_update_scores_and_ranks"
     ),
 
-)
+]
