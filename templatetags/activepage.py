@@ -15,7 +15,6 @@ def activepage(request, url, title, icon=None):
     active = ''
     #if reverse(url) == request.path:
     #    active = ' class="ui-btn-active ui-state-persist"'
-
     return s.substitute(link=reverse(url), active=active, icon=the_icon, title=str(_(title)))
 
 @register.simple_tag

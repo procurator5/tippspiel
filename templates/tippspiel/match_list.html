@@ -9,7 +9,7 @@
 <section data-role="content">
     <ul data-role="listview" data-filter="true">
     {% for match in matches %}
-        <li><a href="{% url tippspiel_match_detail match.pk %}">{{ match.team_home.name }} {% trans "vs." %} {{ match.team_visitor.name }}</a></li>
+        <li><a href="{% url 'tippspiel_match_detail' match.pk %}">{{ match.team_home.name }} {% trans "vs." %} {{ match.team_visitor.name }}</a></li>
     {% endfor %}
     </ul>
 </section>

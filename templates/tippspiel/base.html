@@ -37,7 +37,7 @@
     <div data-role="page">
 
         {% block body %}{% endblock %}
-
+		{% autoescape off %}
         <footer data-role="footer" data-id="Persistency" data-position="fixed">
             <div data-role="navbar" data-iconpos="top">
                 <ul>
@@ -48,7 +48,7 @@
                 </ul>
             </div>
         </footer>
-
+		{% endautoescape %}
     </div>
 
 </body>

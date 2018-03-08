@@ -86,7 +86,7 @@ def matchday_detail(request, matchday_number):
             'matches': matches,
             'tipps': tipps_by_matches
         },
-        context_instance=RequestContext(request)
+        RequestContext(request)
     )
 
 

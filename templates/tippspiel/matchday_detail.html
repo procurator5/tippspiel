@@ -4,16 +4,16 @@
 
 <header data-role="header" data-position="fixed">
         {% if number > 1 %}
-        <a data-role="button" data-icon="arrow-l" data-inline="true" data-iconpos="notext" href="{% url tippspiel_matchday_detail matchday_number=number|add:"-1" %}">Previous</a>
+        <a data-role="button" data-icon="arrow-l" data-inline="true" data-iconpos="notext" href="{% url 'tippspiel_matchday_detail' matchday_number=number|add:"-1" %}">Previous</a>
         {% endif %}
         <h1>{{ number }}. {% trans "Matchday" %}</h1>
         {% if number < 34 %}
-        <a data-role="button" data-icon="arrow-r" data-inline="true" data-iconpos="notext" class="ui-btn-right" href="{% url tippspiel_matchday_detail matchday_number=number|add:"1" %}">Next</a>
+        <a data-role="button" data-icon="arrow-r" data-inline="true" data-iconpos="notext" class="ui-btn-right" href="{% url 'tippspiel_matchday_detail' matchday_number=number|add:"1" %}">Next</a>
         {% endif %}
 </header>
 
 <section data-role="content">
-    <form action="{% url tippspiel_matchday_detail number %}" method="post">
+    <form action="{% url 'tippspiel_matchday_detail' number %}" method="post">
     {% csrf_token %}
     <ul data-role="listview">
         {% for match in matches %}
