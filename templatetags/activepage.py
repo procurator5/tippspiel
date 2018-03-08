@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.template.defaultfilters import register
 from django.utils.translation import ugettext_lazy as _
 
@@ -13,10 +13,10 @@ def activepage(request, url, title, icon=None):
         the_icon = ' data-icon="%s"' % icon
 
     active = ''
-    if reverse(url) == request.path:
-        active = ' class="ui-btn-active ui-state-persist"'
+    #if reverse(url) == request.path:
+    #    active = ' class="ui-btn-active ui-state-persist"'
 
-    return s.substitute(link=reverse(url), active=active, icon=the_icon, title=unicode(_(title)))
+    return s.substitute(link=reverse(url), active=active, icon=the_icon, title=str(_(title)))
 
 @register.simple_tag
 def activepage_with_icon(request, url, title, icon):

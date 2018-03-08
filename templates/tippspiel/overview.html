@@ -20,7 +20,7 @@
         <li data-role="list-divider">{% trans "Upcoming Matchdays" %}</li>
         {% for upcoming_matchday in upcoming_matchdays %}
         <li>
-            <a href="{% url tippspiel_matchday_detail matchday_number=upcoming_matchday %}">{{ upcoming_matchday}}. {% trans "Matchday" %}</a>
+            <a href="{% url 'tippspiel_matchday_detail' matchday_number=upcoming_matchday %}">{{ upcoming_matchday}}. {% trans "Matchday" %}</a>
         </li>
         {% empty %}
         <li>{% trans "No upcoming matchdays" %}.</li>
@@ -30,7 +30,7 @@
     <ul data-role="listview" data-inset="true">
         <li data-role="list-divider">Top {{ top_players|length }} {% trans "Players" %}</li>
         {% for tp in top_players %}
-        <li{% ifequal tp.pk user.pk %} data-theme="e"{% endifequal %}><a href="{% url tippspiel_player_detail player_name=tp.user.username %}">
+        <li{% ifequal tp.pk user.pk %} data-theme="e"{% endifequal %}><a href="{% url 'tippspiel_player_detail' player_name=tp.user.username %}">
             {% gravatar_img tp %}
             <h3>{{ tp.rank }}. {{ tp.user.username }}</h3>
             <span class="ui-li-count">{{ tp.score }} {% trans "points" %}</span>

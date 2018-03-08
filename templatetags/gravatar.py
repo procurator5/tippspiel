@@ -9,6 +9,6 @@ def gravatar(player, size=120):
 def gravatar_img(player, size=120):
     return '<img src="%s" alt="%s %s." />' % (
         gravatar(player, size),
-        unicode(_('Gravatar for')),
+        str(_('Gravatar for')),
         player.user.username
     )

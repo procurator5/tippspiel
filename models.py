@@ -12,7 +12,10 @@ class Player(models.Model):
 
     def gravatar_hash(self):
         from hashlib import md5
-        return md5(self.user.email.lower()).hexdigest()
+        try:
+            return md5(self.user.email.lower()).hexdigest()
+        except TypeError:
+            return ""
 
     def update_score(self):
         tipps = Tipp.objects.filter(player=self)

@@ -18,8 +18,11 @@ import re
 def overview(request):
     player = get_object_or_404(Player, user=request.user)
     top_players = Player.objects.order_by('-score', 'user__username')[:3]
-    upcoming_matchday = Match.objects.filter(date__gt=timezone.now()).order_by('date')[0].matchday
-    upcoming_matchdays = filter(lambda x: x<35, [upcoming_matchday+i for i in (0, 1, 2)])
+    try:
+        upcoming_matchday = Match.objects.filter(date__gt=timezone.now()).order_by('date')[0].matchday
+        upcoming_matchdays = filter(lambda x: x<35, [upcoming_matchday+i for i in (0, 1, 2)])
+    except IndexError:
+        upcoming_matchdays = str("0")
     return render_to_response(
         'tippspiel/overview.html',
         {
@@ -27,7 +30,7 @@ def overview(request):
             'top_players': top_players,
             'upcoming_matchdays': upcoming_matchdays
         },
-        context_instance=RequestContext(request)
+        #context_instance=RequestContext(request)
     )
 
 
