@@ -10,7 +10,7 @@
     <ul data-role="listview" data-filter="true">
         {% for m in matchdays %}
         <li>
-            <a href="{% url 'tippspiel_matchday_detail' m %}">{{ m }}</a>
+            <a href="{% url 'tippspiel_league_detail' m %}">{{ m }}</a>
         </li>
         {% endfor %}
         <li data-theme="a">

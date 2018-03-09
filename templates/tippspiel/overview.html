@@ -18,12 +18,10 @@
 
     <ul data-role="listview" data-inset="true">
         <li data-role="list-divider">{% trans "Upcoming Matchdays" %}</li>
-        {% for upcoming_matchday in upcoming_matchdays %}
+        {% for league in league_list %}
         <li>
-            <a href="{% url 'tippspiel_matchday_detail' matchday_number=upcoming_matchday %}">{{ upcoming_matchday}}. {% trans "Matchday" %}</a>
+            <a href="/league/{{league.id }}">{{ league.league_name}}</a>
         </li>
-        {% empty %}
-        <li>{% trans "No upcoming matchdays" %}.</li>
         {% endfor %}
     </ul>
 

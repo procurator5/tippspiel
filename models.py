@@ -2,8 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
 from django.utils import timezone
-from django.template.defaultfilters import default
-from django.db.models.lookups import IsNull
+
 
 class League(models.Model):
     league_name = models.CharField(max_length = 128)

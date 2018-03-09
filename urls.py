@@ -51,9 +51,9 @@ urlpatterns += [
     ),
 
     url(
-        r'^matchday/(?P<matchday_number>\d+)/$',
-        matchday_detail,
-        name="tippspiel_matchday_detail"
+        r'^league/(?P<league_id>\d+)/$',
+        league_detail,
+        name="tippspiel_league_detail"
     ),
 
     url(

@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # coding=utf-8
-from tippspiel.models import Team, Match
 from tippspiel.xmlsoccer import XmlSoccer
 
 from tippspiel.models import League, Team, Match
