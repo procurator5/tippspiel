@@ -2,11 +2,14 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
 from django.utils import timezone
+from django.template.defaultfilters import default
+from django.db.models.lookups import IsNull
 
 class League(models.Model):
     league_name = models.CharField(max_length = 128)
     country = models.CharField(max_length = 128)
-    iscup = models.BooleanField()
+    is_cup = models.BooleanField(default=False)
+    is_enabled = models.BooleanField(default=False)
 
 class Player(models.Model):
     """A player is a user in the context of the tippspiel."""
@@ -45,6 +48,8 @@ class Team(models.Model):
     """A team in the Bundesliga"""
     handle = models.CharField(max_length=3)
     name = models.CharField(max_length=100)
+    country = models.CharField(max_length=128, default=None)
+    stadium = models.CharField(max_length=128, null=True, default=None)
 
     def __unicode__(self):
         return self.handle
@@ -54,9 +59,12 @@ class Team(models.Model):
 class Match(models.Model):
     """A match between two teams."""
     date = models.DateTimeField()
+    league = models.ForeignKey(League, on_delete=models.CASCADE, null=True)
     matchday = models.IntegerField(default=0)
     team_home = models.ForeignKey(Team, related_name='+', on_delete=models.DO_NOTHING)
     team_visitor = models.ForeignKey(Team, related_name='+', on_delete=models.DO_NOTHING)
+    round = models.IntegerField(default=1)
+    location = models.CharField(max_length=128, null=True)
     score_home = models.IntegerField(default=-1)
     score_visitor = models.IntegerField(default=-1)
 
