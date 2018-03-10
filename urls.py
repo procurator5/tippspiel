@@ -39,17 +39,6 @@ urlpatterns += [
         overview,
         name="tippspiel_overview"
     ),
-
-    url(
-        r'^matchdays/$',
-        login_required(ListView.as_view(
-            queryset=range(1, 35),
-            context_object_name='matchdays',
-            template_name='tippspiel/matchday_list.html'
-        )),
-        name="tippspiel_matchday_list"
-    ),
-
     url(
         r'^league/(?P<league_id>\d+)/$',
         league_detail,
@@ -58,10 +47,7 @@ urlpatterns += [
 
     url(
         r'^matches/$',
-        login_required(ListView.as_view(
-            queryset=Match.objects.order_by('date'),
-            context_object_name='matches'
-        )),
+        matches,
         name='tippspiel_match_list'
     ),
 

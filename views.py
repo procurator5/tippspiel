@@ -11,9 +11,6 @@ from django.views.decorators.csrf import csrf_protect
 
 from tippspiel.models import Player, Team, Match, Tipp, League
 
-import re
-from faulthandler import is_enabled
-
 
 @login_required
 def overview(request):
@@ -51,6 +48,23 @@ def league_detail(request, league_id):
         RequestContext(request)
     )
 
+@login_required
+@csrf_protect
+def matches(request):
+
+
+    matches = Match.objects.all().order_by("date")
+    tipps = Tipp.objects.filter(player__user=request.user)
+    tipps_by_matches = {t.match.pk: t for t in tipps}
+
+    return render_to_response(
+        'tippspiel/matches_list.html',
+        {
+            'matches': matches,
+            'tipps': tipps_by_matches
+        },
+        RequestContext(request)
+    )
 
 @login_required
 def match_detail(request, match_id):
@@ -90,7 +104,7 @@ def settings(request):
         {
             'errors': errors
         },
-        context_instance=RequestContext(request)
+        RequestContext(request)
     )
 
 

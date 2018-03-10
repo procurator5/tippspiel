@@ -1,0 +1,29 @@
+{% extends "tippspiel/base.html" %}
+{% load i18n dicthelpers %}
+{% block body %}
+
+<ul id="Z_6" class="listHolderTitled liveMatches expandableList">
+		<ul class="list">
+        {% for match in matches %}
+        	{% ifchanged match.date.date %} 
+        	<li class="groupedListItem first" id="gid_1_live">
+				<h3 id="sid_1_live" class="expanded sport_1">
+					<i class="ico ico-holder"></i>
+        				{{ match.date.date }} 
+        			<span class="ico-holder toggler"></span>
+				</h3>
+			</li>
+        	{% endifchanged %}
+	        <li>
+	            {% if match.has_started %}
+	            {% include "tippspiel/match/matchday_detail_match_started.html" %}
+	            {% else %}
+	            {% include "tippspiel/match/matchday_detail_match_not_started.html" %}
+	            {% endif %}
+	        </li>
+	    {% endfor %}
+	    </ul>
+	</li>
+</ul>
+
+{% endblock %}

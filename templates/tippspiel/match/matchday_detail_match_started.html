@@ -1,28 +1,47 @@
 {% load i18n staticfiles %}
-            <a href="{% url tippspiel_match_detail match.pk %}">
-                <div class="ui-grid-b">
-                    <div class="ui-block-a">
-                        <img src="{% static "img/emblems/80/" %}{{ match.team_home.handle}}.png" alt="{{ match.team_home.handle }}" title="{{ match.team_home.name }}" />
-                    </div>
-                    <div class="ui-block-b">
-                        
-                        <p class="tippspiel_match_result">
-                                {% if match.score_home == -1 or match.score_visitor == -1 %}
-                                -:-
-                                {% else %}
-                                {{ match.score_home }}:{{ match.score_visitor }}
-                                {% endif %}
-                        </p>
-                        <p class="tippspiel_tipp_result">
-                                {% if tipp %}
-                                {{ tipp.score_home }}:{{ tipp.score_visitor }} ({{ tipp.points }})
-                                {% else %}
-                                -:- (0 {% trans "points" %})
-                                {% endif %}
-                        </p>
-                    </div>
-                    <div class="ui-block-c" style="text-align: right;">
-                        <img src="{% static "img/emblems/80/" %}{{ match.team_visitor.handle}}.png" alt="{{ match.team_visitor.handle }}" title="{{ match.team_visitor.name }}" />
-                    </div>
-                </div>
-            </a>
+
+<li class="groupedListSubItem first" id="VU111882264">
+  <div class="sportItemContainer">  
+  	<div class="ico-holder addMyLive off"></div> 
+  		<div class="sport-title "> 
+  			<div>   
+  				<span class="score">{{ match.score_home }} : {{ match.score_visitor }}</span>   
+  				<span class="ico-holder scoreTime">
+  					<span>59'</span>
+  				</span>   
+  				<span class="eventStatusScore">- 2-й тайм</span>   
+  			</div> 
+  			<div class="sportTextHolder">  
+  				<div> 
+  					<h1>{{ match.team_home.name }} - {{ match.team_visitor.name }} </h1> 
+  					<p class="event-desc">{{ match.team_home.country }} - {{ match.league.league_name }}</p> 
+  				</div>
+  			</div> 
+  		</div> 
+  		<ul class="oddsholder ">   
+  			<li class="oddHolder outcome-1 betUp"> 
+  				<a href="#" id="VU111882264_339877535_1">
+  					<span class="oddpos">1</span>
+  					<span class="oddnum">6.50</span>
+  					<span class="oddlock"></span></a>
+  			</li>  
+  			<li class="oddHolder outcome-x betDown"> 
+  				<a href="#" id="VU111882264_339877535_x">
+  					<span class="oddpos">x</span>
+  					<span class="oddnum">1.90</span>
+  					<span class="oddlock"></span>
+  				</a> 
+  			</li>  
+  			<li class="oddHolder outcome-2 betUp"> 
+  				<a href="#" id="VU111882264_339877535_2">
+  					<span class="oddpos">2</span>
+  					<span class="oddnum">2.40</span>
+  					<span class="oddlock"></span>
+  				</a> 
+  			</li>
+  		</ul>  
+  		<div class="ico-holder removeMyLive off"></div> 
+  	</div>  
+  <hr>
+ </li>
+
