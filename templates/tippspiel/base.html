@@ -16,8 +16,9 @@
     <![endif]-->
 
     <!-- Script -->
-    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.2.0-alpha.1/jquery.mobile-1.2.0-alpha.1.min.js"></script>
+    
+    <!-- script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.2.0-alpha.1/jquery.mobile-1.2.0-alpha.1.min.js"></script -->
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{% static "img/favicon.ico" %}" type="image/x-icon" />
@@ -105,6 +106,28 @@
         {% block body %}{% endblock %}
 
     </div>
+
+<!-- Popup menu -->
+<div id="sidemenu">
+	<div class="sidemenu"> 
+		<div class="sidemenuLogin"> 
+			<div class="ico-holder login-holder"> Выполните вход <span>или зарегистрируйтесь</span> </div> 
+			<span class="chevron"></span> 
+		</div>   
+	</div>  
+	<ul class="menuNav sideNav">  
+		<li>
+			<a class="ico-holder registr">Регистрация</a>
+		</li>   
+		<li><a class="ico-holder bets">Ставки</a></li> 
+		<li><a class="ico-holder search">Поиск</a></li>    
+		<li><a class="ico-holder contacts">Контакты</a></li>    
+		<li class="dynamicallyAdded promotions"> <a class="ico-holder">  <span class="ico-holder-text">Акции</span> <span class="chevron"></span> </a> </li>  
+		<li class="dynamicallyAdded adviser"> <a class="ico-holder">  <i class="adviser-count-icon"><span>2</span></i>  <span class="ico-holder-text">Советы</span> <span class="chevron"></span> </a> </li>   
+		<li> <a class="ico-holder cyberSport">Киберспорт</a> </li>       
+	</ul>  
+	<br> 
+</div>
 
 </body>
 </html>
