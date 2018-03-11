@@ -11,6 +11,20 @@ from django.views.decorators.csrf import csrf_protect
 
 from tippspiel.models import Player, Team, Match, Tipp, League
 
+from django import template
+
+
+register = template.Library()
+
+
+def active(url, request):
+    if url == request.get_full_path():
+        return True
+    else:
+        return False
+
+
+register.filter('active', active)
 
 @login_required
 def overview(request):

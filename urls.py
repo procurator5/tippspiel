@@ -36,8 +36,8 @@ urlpatterns = [
 urlpatterns += [
     url(
         r'^$',
-        overview,
-        name="tippspiel_overview"
+        matches,
+        name='tippspiel_match_list'        
     ),
     url(
         r'^league/(?P<league_id>\d+)/$',
@@ -47,8 +47,8 @@ urlpatterns += [
 
     url(
         r'^matches/$',
-        matches,
-        name='tippspiel_match_list'
+        overview,
+        name="tippspiel_overview"
     ),
 
     url(
