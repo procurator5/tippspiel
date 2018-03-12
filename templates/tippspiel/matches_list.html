@@ -27,8 +27,8 @@
 			</div>
 		</div>
 
-<ul id="Z_6" class="listHolderTitled liveMatches expandableList">
-		<ul class="list">
+<div class="view visible" id="sportsLeaguesEventsView">
+<ul id="Z_7" class="listHolderTitled liveMatches expandableList list">
         {% for match in matches %}
         	{% ifchanged match.date.date %} 
         	<li class="groupedListItem first" id="gid_1_live">
@@ -50,5 +50,6 @@
 	    </ul>
 	</li>
 </ul>
+</div>
 
 {% endblock %}

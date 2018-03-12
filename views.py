@@ -26,25 +26,21 @@ def active(url, request):
 
 register.filter('active', active)
 
-@login_required
+#@login_required
 def overview(request):
-    player = get_object_or_404(Player, user=request.user)
-    top_players = Player.objects.order_by('-score', 'user__username')[:3]
     league_list = League.objects.filter(is_enabled=True).all()
 
     return render_to_response(
         'tippspiel/overview.html',
         {
-            'player': player,
-            'top_players': top_players,
             'league_list': league_list
         },
-        #context_instance=RequestContext(request)
+        RequestContext(request)
     )
 
 
-@login_required
-@csrf_protect
+#@login_required
+#@csrf_protect
 def league_detail(request, league_id):
 
 
@@ -62,20 +58,17 @@ def league_detail(request, league_id):
         RequestContext(request)
     )
 
-@login_required
-@csrf_protect
+#@login_required
+#@csrf_protect
 def matches(request):
 
 
     matches = Match.objects.all().order_by("date")
-    tipps = Tipp.objects.filter(player__user=request.user)
-    tipps_by_matches = {t.match.pk: t for t in tipps}
 
     return render_to_response(
         'tippspiel/matches_list.html',
         {
             'matches': matches,
-            'tipps': tipps_by_matches
         },
         RequestContext(request)
     )

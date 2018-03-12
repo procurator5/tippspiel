@@ -36,7 +36,6 @@ strong,
 sub,
 sup,
 tt,
-var,
 b,
 u,
 i,
@@ -3575,7 +3574,7 @@ li.more>.chevron:after {
 	content: '\e902'
 }
 
-.liveMatches>li ul.list>li .sport-title .score {
+.liveMatches>li .sport-title .score {
 	display: inline-block;
 	color: #f8c22b;
 	font-size: 17px;

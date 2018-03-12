@@ -9,6 +9,9 @@ class League(models.Model):
     country = models.CharField(max_length = 128)
     is_cup = models.BooleanField(default=False)
     is_enabled = models.BooleanField(default=False)
+    
+    def getActualMatches(self):
+        return Match.objects.filter(league = self).filter(date__gte  = timezone.now()).order_by('date').all() 
 
 class Player(models.Model):
     """A player is a user in the context of the tippspiel."""
@@ -64,8 +67,8 @@ class Match(models.Model):
     team_visitor = models.ForeignKey(Team, related_name='+', on_delete=models.DO_NOTHING)
     round = models.IntegerField(default=1)
     location = models.CharField(max_length=128, null=True)
-    score_home = models.IntegerField(default=-1)
-    score_visitor = models.IntegerField(default=-1)
+    score_home = models.IntegerField(default=0)
+    score_visitor = models.IntegerField(default=0)
 
     def has_started(self):
         return self.date <= timezone.now()
