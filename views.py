@@ -3,13 +3,11 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
-from django.utils import timezone
-from django.views.decorators.csrf import csrf_protect
 
-from tippspiel.models import Player, Team, Match, Tipp, League
+from tippspiel.models import Player, Match, Tipp, League
 
 from django import template
 
@@ -103,9 +101,6 @@ def player_detail(request, player_name):
 @login_required
 def settings(request):
     errors = []
-    if request.method == 'POST':
-        npw = 1
-        npw_c = 1
     return render_to_response(
         'tippspiel/settings.html',
         {
