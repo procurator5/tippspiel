@@ -4,7 +4,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render_to_response
+from django.shortcuts import get_object_or_404, render_to_response, render
 from django.template import RequestContext
 
 from tippspiel.models import Player, Match, Tipp, League
@@ -28,47 +28,43 @@ register.filter('active', active)
 def overview(request):
     league_list = League.objects.filter(is_enabled=True).all()
 
-    return render_to_response(
+    return render(
+        request,
         'tippspiel/overview.html',
         {
             'league_list': league_list
         },
-        RequestContext(request)
     )
 
 
 #@login_required
 #@csrf_protect
 def league_detail(request, league_id):
-
-
     matches = Match.objects.filter(league=League.objects.get(id = int(league_id)))
     tipps = Tipp.objects.filter(player__user=request.user)
     tipps_by_matches = {t.match.pk: t for t in tipps}
 
-    return render_to_response(
+    return render(
+        request,
         'tippspiel/matchday_detail.html',
         {
             'number': league_id,
             'matches': matches,
             'tipps': tipps_by_matches
         },
-        RequestContext(request)
     )
 
 #@login_required
 #@csrf_protect
 def matches(request):
-
-
     matches = Match.objects.all().order_by("date")
 
-    return render_to_response(
+    return render(
+        request,
         'tippspiel/matches_list.html',
         {
             'matches': matches,
         },
-        RequestContext(request)
     )
 
 @login_required
