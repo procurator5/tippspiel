@@ -8,15 +8,6 @@ from tippspiel.views import *
 
 urlpatterns = [
     url(
-        r'^login/$',
-        auth.login,
-        {
-            'template_name': 'tippspiel/login.html'
-        },
-        name='login'
-    ),
-   
-    url(
         r'^logout/$',
         auth.logout_then_login,
         name="logout"

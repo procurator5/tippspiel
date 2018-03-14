@@ -11808,9 +11808,10 @@ html.app__product--leonchina body.wide .games__transfer-modal {
 
 #loginPopup {
 	display: none;
-	position: fixed;
+	position: absolute;
 	height: auto;
-	width: 100%;
+	right: 0;
+	width: 350px;
 	top: 45px;
 	z-index: 30;
 	padding-bottom: 35px
