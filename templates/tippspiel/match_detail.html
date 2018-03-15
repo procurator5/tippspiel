@@ -1,28 +1,80 @@
-{% extends "tippspiel/base.html" %}
+{% extends "base.html" %}
 {% load i18n staticfiles gravatar %}
 {% block body %}
+    <div id="wrapper">
+    	<!-- Links Live/Top/All -->
+		<div class="menu menu-top menu-horizontal" data-slider="true" data-level="2" data-menu-id="bets" style="opacity: 1;">
+			<div class="menu-inner position-fixed"> 
+				<div class="tab-list tab-list-current" data-count="2">  
+					<ul>  
+						<li data-id="preMatchEvents" class="tab item-preMatchEvents is-inactive"> 
+						<a href="/" class="tabs-nav__itm tabs-nav__itm--next active"> 
+							<div class="tab-inner"> 
+								<span class="ico-holder"></span> 
+								<div class="text">Топ матчи</div> 
+							</div> 
+							</a>
+						</li>  
+						<li data-id="sports" class="tab item-sports is-inactive"> 
+						<a href="/" class="tabs-nav__itm tabs-nav__itm--next is-inactive"> 
+							<div class="tab-inner"> 
+								<span class="ico-holder"></span> 
+								<div class="text">Лиги</div> 
+							</div> 
+							</a>
+						</li>  
+					</ul>  
+				</div> 
+			</div>
+		</div>
 
-<header data-role="header" data-position="fixed">
-    <a href="{% url 'tippspiel_matchday_detail' matchday_number=match.matchday %}" data-icon="arrow-l">{{ match.matchday }}. {% trans "Matchday" %}</a>
-    <h1>{{ match }}</h1>
-</header>
-
-<section data-role="content">
-    <ul data-role="listview">
-        {% for tipp in tipps %}
-        <li>
-            <a href="{% url 'tippspiel_player_detail' player_name=tipp.player.user.username %}">
-            {% gravatar_img tipp.player %}
-            {{ tipp.player.rank }}. {{ tipp.player.user.username }}
-            <p class="tippspiel_tipp_result">
-                {{ tipp.score_home }}:{{ tipp.score_visitor }} ({{ tipp.points }})
-            </p>
-            </a>
-        </li>
-        {% empty %}
-        <li>{% trans "There are no tipps for display." %}</li>
-        {% endfor %}
-    </ul>
-</section>
+<div id="content-wrap">
+   <div id="content">
+      <div class="view visible" id="eventDetailsView">
+         <!-- Event page top info block -->   
+         <div id="aboutEvent">
+            <div class="eventLeague">  <span class="date">{{match.date.date}}&nbsp;{{match.date|date:'H:i'}}</span> <span class="preInfo prematch">Футбол - {{match.league.league_name}}</span>  </div>
+            <table class="prematchEvent">
+               <tbody>
+                  <tr>
+                     <td class="nameOne type2">
+                        <h1>{{match.team_home.name}}</h1>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td class="versus">против</td>
+                  </tr>
+                  <tr>
+                     <td class="nameTwo type2">
+                        <h1>{{match.team_visitor.name}}</h1>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <ul id="betList" class="betList">
+         	{% for group in groups %}
+            <li class="groupedListItem" id="140552461">
+               <h3>{{group.bet_name}}</h3>
+               <table class="list cell3">
+                  <tbody>
+                     <tr>
+					{% for bid in match.getMainBets %}  
+                        <td class="">
+                           <a id="140552461_214365_0" href="{% url 'tippspiel_bet_form' bid.id %}">
+                              <div>{{bid.bet.bet_choice}}</div>
+                              <div class="oddHolder" id="odds_228604162_0_1">{{bid.score}}</div>
+                           </a>
+                        </td>
+            		{% endfor %}                     
+                     </tr>
+                  </tbody>
+               </table>
+            </li>
+            {% endfor %}
+         </ul>
+      </div>
+   </div>
+</div>
 
 {% endblock %}

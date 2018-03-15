@@ -1,9 +1,8 @@
 {% load i18n staticfiles %}
             
-            		<li class="groupedListSubItem first" id="PI228515994">  
+            		<li class="groupedListSubItem first" id="ma{{match.id}}" onclick="return location.href = '{% url 'tippspiel_match_detail' match.id %}'">  
             			<div class="sportItemContainer">  
             				<div class="sport-title "> 
-            					<div>     </div> 
             					<div class="sportTextHolder">  
             						<div class="timeKickOff">{{match.date|date:'H:i'}}</div> 
             						<div class="eventPlusDesc"> 
@@ -12,28 +11,16 @@
             						</div>  
             					</div> 
             				</div> 
-            					<ul class="oddsholder ">   
+            					<ul class="oddsholder "> 
+            					{% for bid in match.getMainBets %}  
             						<li class="oddHolder outcome-1 "> 
-            							<a href="#" id="PI228515994_48351">
-            								<span class="oddpos">1</span>
-            								<span class="oddnum">1.65</span>
+            							<a href="{% url 'tippspiel_bet_form' bid.id %}" id="bet{{bid.id}}">
+            								<span class="oddpos">{{bid.bet_choice}}</span>
+            								<span class="oddnum">{{bid.score}}</span>
             								<span class="oddlock"></span>
             							</a> 
             						</li>  
-            						<li class="oddHolder outcome-x "> 
-            							<a href="#" id="PI228515994_58805">
-            								<span class="oddpos">x</span>
-            								<span class="oddnum">3.51</span>
-            								<span class="oddlock"></span>
-            							</a> 
-            						</li>  
-            						<li class="oddHolder outcome-2 "> 
-            							<a href="#" id="PI228515994_44508">
-            								<span class="oddpos">2</span>
-            								<span class="oddnum">5.56</span>
-            								<span class="oddlock"></span>
-            							</a> 
-            						</li>    
+            					{% endfor %}
             					</ul>  
             				</div>  
             			</li>

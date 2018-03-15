@@ -1,13 +1,10 @@
 # coding=utf-8
-
-from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse
-from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render_to_response, render
 from django.template import RequestContext
+from django.utils import timezone
 
-from tippspiel.models import Player, Match, Tipp, League
+from tippspiel.models import Match, Tipp, League, MatchBet, BetGroup
 
 from django import template
 
@@ -57,7 +54,7 @@ def league_detail(request, league_id):
 #@login_required
 #@csrf_protect
 def matches(request):
-    matches = Match.objects.all().order_by("date")
+    matches = Match.objects.filter(league__is_enabled = True).filter(date__gte  = timezone.now()).all().order_by("date")
 
     return render(
         request,
@@ -68,30 +65,33 @@ def matches(request):
     )
 
 @login_required
+def bet_form(request, bet_id):
+    match_bet = get_object_or_404(MatchBet, pk=bet_id)
+    match = match_bet.match
+    tipps = MatchBet.objects.filter(match=match).order_by('bet__bet_group')
+    return render(
+        request,
+        'tippspiel/bet_form.html',
+        {
+            'match': match,
+            'tipps': tipps,
+            'groups': BetGroup.objects.all(),
+            'tip': match_bet
+        },
+    )
+
+#@login_required
 def match_detail(request, match_id):
     match = get_object_or_404(Match, pk=match_id)
-    tipps = None
-    if match.has_started():
-        tipps = Tipp.objects.filter(match=match).order_by('player__rank')
-    return render_to_response(
+    tipps = MatchBet.objects.filter(match=match).order_by('bet__bet_group')
+    return render(
+        request,
         'tippspiel/match_detail.html',
         {
             'match': match,
-            'tipps': tipps
+            'tipps': tipps,
+            'groups': BetGroup.objects.all()
         },
-        RequestContext(request)
-    )
-
-
-@login_required
-def player_detail(request, player_name):
-    p = get_object_or_404(Player, user__username=player_name)
-    return render_to_response(
-        'tippspiel/player_detail.html',
-        {
-            'player': p
-        },
-        context_instance=RequestContext(request)
     )
 
 @login_required
@@ -104,27 +104,3 @@ def settings(request):
         },
         RequestContext(request)
     )
-
-
-@staff_member_required
-def update_scores_and_ranks(request):
-    # update scores
-    for player in Player.objects.all():
-        player.update_score()
-        player.save()
-
-    # update ranks
-    players = Player.objects.all().order_by('score').reverse()
-    rank, tick, score = 1, 0, players[0].score
-    for player in players:
-        if player.score < score:
-            rank += tick
-            tick = 1
-            score = player.score
-        else:
-            tick += 1
-        if player.rank != rank:
-            player.rank = rank
-            player.save()
-
-    return HttpResponseRedirect(reverse('tippspiel_settings'))

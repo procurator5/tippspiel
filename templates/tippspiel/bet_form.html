@@ -1,0 +1,90 @@
+{% extends "tippspiel/match_detail.html" %}
+{% load i18n dicthelpers %}
+{% block bets %}
+<div id="slipBox" class="">
+   <div id="slipTitle">
+      <span id="deleteSlip" class="ico-holder"></span>  
+      <h1>Одиночная ставка</h1>
+      <span id="slipClose" class="ico-holder slipClose"></span> 
+   </div>
+   <div id="slipHolder">
+      <div id="slipData">
+         <ul id="slipList" class="list">
+            <li class="open">
+               <a id="SLIP_140552461">
+                  <div class="right"> <span class="currentOdd"> {{tip.score}} </span> <span class="oldOdd">  </span> </div>
+                  <div class="delSlipItem ico-holder"></div>
+                  <div class="slipBets">
+                     <div class="betTitle"> {{match.team_home.name}} - {{match.team_visitor.name}} </div>
+                     <div class="betType">{{tip.bet.bet_group.bet_short_name}}&nbsp;-&nbsp;</div>
+                     <div class="betChoice">{{tip.bet.bet_choice}}</div>
+                  </div>
+                  <div class="suspended-decorator"> <i class="ico-holder"></i> Прием ставок на данное пари приостановлен </div>
+               </a>
+            </li>
+         </ul>
+         <ul class="list betDetails">
+            <li> Макс. выигрыш: <span class="right" id="slipMaxWin">0</span> </li>
+         </ul>
+         <div class="bLiveUpdateSlip  hidden"> <input type="checkbox" id="liveUpdateSlipCheckbox" name="liveUpdateSlip"> <label class="cb-label" for="liveUpdateSlipCheckbox"></label> <label for="liveUpdateSlipCheckbox">Автоматически обновлять коэффициенты.</label> <em class="liveUpdateDetails">Подробнее</em> </div>
+         <p class="info"> Ставка от <span id="slipMinStake">10 RUB</span> до <span id="slipMaxStake">569300 RUB</span> </p>
+      </div>
+      <form method="post" acton="#">
+         {% csrf_token %}
+         <div id="slipPlaceBetKb" style="">
+            <div class="vkeyboard" id="vkeyboardSlip">
+               <div id="slipStakeDiv" class="inputDiv">0</div>
+			   <input type="hidden" id="betCount" name="betCount" value="0"/>
+			   <input type="hidden" id="betId" name="betId" value="{{tip.id}}"/>
+               <input class="button" type="submit" id="slipPlaceBetBtn" value="OK"/> 
+               <ul>
+                  <li>1</li>
+                  <li>2</li>
+                  <li>3</li>
+                  <li data-bt="backspace" class="backspace ico-holder"></li>
+                  <li class="break">4</li>
+                  <li>5</li>
+                  <li>6</li>
+                  <li>.</li>
+                  <li class="break">7</li>
+                  <li>8</li>
+                  <li>9</li>
+                  <li>0</li>
+               </ul>
+            </div>
+         </div>
+      </form>
+   </div>
+</div>
+
+<script>
+// VARIABLES
+var calc = $('#vkeyboardSlip');
+var calcDisplay = calc.find('#slipStakeDiv');
+var calcKeys = calc.find('li');
+var calcSpace = calc.find('.backspace');
+
+// ADD NUMBERS TO INPUT
+calcKeys.on('click', function () {
+	if(calcDisplay.text() == '0' && $(this).text() != '.')
+	    calcDisplay.text( $(this).text() );
+	else
+	    calcDisplay.text( calcDisplay.text() + $(this).text() );
+		
+	calc.find("#betCount").val(calcDisplay.text())
+	
+	$('#slipMaxWin').text(calcDisplay.text() * $('.currentOdd').text())
+});
+
+// BACKSPACE BUTTON
+calcSpace.on('click', function () { 
+    calcDisplay.text( calcDisplay.text().substring(0, calcDisplay.text().length-1) );
+	if(calcDisplay.text() == "")
+	    calcDisplay.text( "0" );
+
+	calc.find("#betCount").val(calcDisplay.text())
+	$('#slipMaxWin').text(calcDisplay.text() * $('.currentOdd').text())
+});
+</script>
+
+{% endblock %}

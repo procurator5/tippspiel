@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.contrib.auth import views as auth
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView, ListView, TemplateView
-from tippspiel.models import Player, Team, Match, Tipp
+from tippspiel.models import Team, Match, Tipp
 from tippspiel.views import *
 
 
@@ -49,31 +49,9 @@ urlpatterns += [
     ),
 
     url(
-        r'^ranking/$',
-        login_required(ListView.as_view(
-            queryset=Player.objects.order_by('-score', 'user__username'),
-            context_object_name='players',
-            template_name='tippspiel/player_list.html'
-        )),
-        name="tippspiel_player_list"
-    ),
-
-    url(
-        r'^player/(?P<player_name>\w+)/$',
-        player_detail,
-        name="tippspiel_player_detail"
-    ),
-
-    url(
-        r'^settings/$',
-        settings,
-        name="tippspiel_settings"
-    ),
-
-    url(
-        r'update_scores_and_ranks/$',
-        update_scores_and_ranks,
-        name="tippspiel_staff_update_scores_and_ranks"
+        r'^bet/(?P<bet_id>\d+)/$',
+        bet_form,
+        name="tippspiel_bet_form"
     ),
 
 ]

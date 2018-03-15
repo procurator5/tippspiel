@@ -18,27 +18,16 @@
   				</div>
   			</div> 
   		</div> 
-  		<ul class="oddsholder ">   
-  			<li class="oddHolder outcome-1 betUp"> 
-  				<a href="#" id="VU111882264_339877535_1">
-  					<span class="oddpos">1</span>
-  					<span class="oddnum">6.50</span>
-  					<span class="oddlock"></span></a>
-  			</li>  
-  			<li class="oddHolder outcome-x betDown"> 
-  				<a href="#" id="VU111882264_339877535_x">
-  					<span class="oddpos">x</span>
-  					<span class="oddnum">1.90</span>
-  					<span class="oddlock"></span>
-  				</a> 
-  			</li>  
-  			<li class="oddHolder outcome-2 betUp"> 
-  				<a href="#" id="VU111882264_339877535_2">
-  					<span class="oddpos">2</span>
-  					<span class="oddnum">2.40</span>
-  					<span class="oddlock"></span>
-  				</a> 
-  			</li>
+  		<ul class="oddsholder ">
+            					{% for bid in match.getMainBets %}  
+            						<li class="oddHolder outcome-1 "> 
+            							<a href="#" id="{{bid.id}}">
+            								<span class="oddpos">1</span>
+            								<span class="oddnum">{{bid.score}}</span>
+            								<span class="oddlock"></span>
+            							</a> 
+            						</li>  
+            					{% endfor %}  		   
   		</ul>  
   		<div class="ico-holder removeMyLive off"></div> 
   	</div>  
