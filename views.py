@@ -26,12 +26,15 @@ register.filter('active', active)
 def overview(request):
     league_list = League.objects.filter(is_enabled=True).all()
 
+    tipps = []
+    if request.user.is_authenticated:
+        tipps = Tipp.objects.filter(player=request.user, state = 'In Game').all()
     return render(
         request,
         'tippspiel/overview.html',
         {
             'league_list': league_list,
-            "tipps": Tipp.objects.filter(player=request.user, state = 'In Game').all()
+            "tipps": tipps
         },
     )
 
@@ -75,12 +78,15 @@ def bet_save(request):
 #@csrf_protect
 def matches(request):
     matches = Match.objects.filter(league__is_enabled = True).filter(date__gte  = timezone.now()).all().order_by("date")
-
+    tipps = []
+    if request.user.is_authenticated:
+        tipps = Tipp.objects.filter(player=request.user, state = 'In Game').all()
     return render(
         request,
         'tippspiel/matches_list.html',
         {
             'matches': matches,
+            "tipps": tipps
         },
     )
 
@@ -103,7 +109,10 @@ def bet_form(request, bet_id):
 #@login_required
 def match_detail(request, match_id):
     match = get_object_or_404(Match, pk=match_id)
-    tipps = MatchBet.objects.filter(match=match).order_by('bet__bet_group')
+    tipps = []
+    if request.user.is_authenticated:
+        tipps = Tipp.objects.filter(player=request.user, state = 'In Game').all()
+    
     return render(
         request,
         'tippspiel/match_detail.html',
