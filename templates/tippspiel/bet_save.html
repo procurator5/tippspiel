@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n staticfiles gravatar %}
+
+{% block body %}
+<div id="modals">
+   <div>
+   {% if is_error %}
+      <div class="modal modal--type__error modal--origin__app modal--new" data-id="error:46741">
+         <div class="ico-holder modal__icon"></div>
+   {% else %}
+      <div class="modal modal--type__success modal--origin__app modal--new" data-id="success:26497">
+         <div class="ico-holder modal__icon"></div>
+	{% endif %}
+         <div class="modal__content"> {{message}} </div>
+         <div class="modal__buttons" onclick="return location.href = '{% url 'tippspiel_match_list' %}'"> <span data-href="" data-index="0" class="modal__button modal__button--close">Закрыть</span> </div>
+      </div>
+   </div>
+</div>
+{% endblock %}

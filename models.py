@@ -19,7 +19,8 @@ class BetGroup(models.Model):
 
 class BetType(models.Model):
     bet_group = models.ForeignKey(BetGroup, on_delete=models.CASCADE)
-    bet_choice = models.CharField(max_length = 128)   
+    bet_choice = models.CharField(max_length = 128)
+    order = models.IntegerField(default=1)   
 
 class Team(models.Model):
     """A team in the Bundesliga"""
@@ -61,7 +62,7 @@ class Match(models.Model):
     #Coefficient bid for             
     def getMainBets(self):
         bets = BetType.objects.filter(bet_group__is_main = True).all()
-        return MatchBet.objects.filter(match = self).filter(bet__in = bets).all()
+        return MatchBet.objects.filter(match = self).filter(bet__in = bets).order_by('bet__order').all()
 
 class MatchBet(models.Model):
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
@@ -72,12 +73,13 @@ class MatchBet(models.Model):
 
 class Tipp(models.Model):
     """A bet by a player on a match."""
+    
     player = models.ForeignKey(User, on_delete=models.CASCADE)
     match = models.ForeignKey(Match, on_delete=models.DO_NOTHING)
     date = models.DateTimeField(default = timezone.now)
     state = models.CharField(max_length=128, default='In Game')
     bet = models.ForeignKey(BetType, on_delete=models.DO_NOTHING)
-    bet_score = models.IntegerField(default=1)
+    bet_score = models.FloatField(default=1)
     amount = models.DecimalField(
         max_digits=16,
         decimal_places=8,

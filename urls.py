@@ -31,12 +31,6 @@ urlpatterns += [
         name='tippspiel_match_list'        
     ),
     url(
-        r'^league/(?P<league_id>\d+)/$',
-        league_detail,
-        name="tippspiel_league_detail"
-    ),
-
-    url(
         r'^matches/$',
         overview,
         name="tippspiel_overview"
@@ -52,6 +46,12 @@ urlpatterns += [
         r'^bet/(?P<bet_id>\d+)/$',
         bet_form,
         name="tippspiel_bet_form"
+    ),
+
+    url(
+        r'^bet_res/$',
+        bet_save,
+        name="tippspiel_bet_result"
     ),
 
 ]

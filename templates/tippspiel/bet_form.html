@@ -29,7 +29,7 @@
          <div class="bLiveUpdateSlip  hidden"> <input type="checkbox" id="liveUpdateSlipCheckbox" name="liveUpdateSlip"> <label class="cb-label" for="liveUpdateSlipCheckbox"></label> <label for="liveUpdateSlipCheckbox">Автоматически обновлять коэффициенты.</label> <em class="liveUpdateDetails">Подробнее</em> </div>
          <p class="info"> Ставка от <span id="slipMinStake">10 RUB</span> до <span id="slipMaxStake">569300 RUB</span> </p>
       </div>
-      <form method="post" acton="#">
+      <form method="post" action="{% url 'tippspiel_bet_result' %}">
          {% csrf_token %}
          <div id="slipPlaceBetKb" style="">
             <div class="vkeyboard" id="vkeyboardSlip">

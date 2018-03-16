@@ -54,4 +54,39 @@
 
 {% if user.is_activated %}
 
+{% block bets %}
+<div id="slipBox" class="waiting">
+   <div id="slipTitle" class="empty">
+      <h1>В игре (1)</h1>
+      <span id="slipClose" class="slipClose ico-holder"></span> 
+   </div>
+   <div id="slipHolder">
+      <div id="slipData">
+         <p><b>Ставки не выбраны.</b> Чтобы выбрать ставку, кликните соответствующий коэффициент.</p>
+      </div>
+   </div>
+</div>
+<div class="waitingBets">
+   <h1 class="">Неразыгранные ставки</h1>
+   <ul id="Z_1" class="">
+   {% for tipp in tipps %}
+      <li class="groupedListItem">
+         <h3>{{ tipp.match.team_home.name }} - {{ tipp.match.team_visitor.name }}</h3>
+         <ul class="list">
+            <li id="w_376108618545198" class="slip-bet-element">
+               <div data-id="376108618545198" class="right sell-bet-active" data-cashoutamount="8.9">
+                  <div class="right-inner">{{tipp.bet_score}}<span>@</span>{{tipp.amount}}</div>
+                  <div class="sell-bet-wrapper"><i class="icon-bet-sell"></i></div>
+               </div>
+               <div class="holder">
+                  <div class="betType">{{tipp.bet.bet_group.bet_short_name}}&nbsp;-&nbsp;</div>
+                  <div class="betChoice">{{tipp.bet.bet_choice}}</div>
+               </div>
+            </li>
+         </ul>
+      </li>
+      {% endfor %}
+   </ul>
+</div>
+{% endblock %}
 {% endif %}

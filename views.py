@@ -1,6 +1,7 @@
 # coding=utf-8
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render_to_response, render
+from django.views.decorators.csrf import csrf_protect
 from django.template import RequestContext
 from django.utils import timezone
 
@@ -29,25 +30,44 @@ def overview(request):
         request,
         'tippspiel/overview.html',
         {
-            'league_list': league_list
+            'league_list': league_list,
+            "tipps": Tipp.objects.filter(player=request.user, state = 'In Game').all()
         },
     )
 
 
-#@login_required
-#@csrf_protect
-def league_detail(request, league_id):
-    matches = Match.objects.filter(league=League.objects.get(id = int(league_id)))
-    tipps = Tipp.objects.filter(player__user=request.user)
-    tipps_by_matches = {t.match.pk: t for t in tipps}
+@login_required
+@csrf_protect
+def bet_save(request):
+    
+    message = "Ваша ставка успешно принята."
+    is_error = False
 
+    if request.method == 'POST':
+        betId = int(request.POST.get("betId"))
+        betCount = float(request.POST.get("betCount"))
+        row =Tipp()
+        
+        row.player = request.user
+        
+        bet = MatchBet.objects.get(pk=betId)
+        row.bet_score = bet.score
+        row.match = bet.match
+        row.amount = betCount
+        row.bet = bet.bet 
+        
+        row.save()
+    else:
+        is_error = True
+        message = "Ошибка получения параметров. Вернитесь на страницу параметров и попробуйте снова"
+        
+    
     return render(
         request,
-        'tippspiel/matchday_detail.html',
+        'tippspiel/bet_save.html',
         {
-            'number': league_id,
-            'matches': matches,
-            'tipps': tipps_by_matches
+            "is_error": is_error,
+            'message': message,
         },
     )
 
