@@ -44,6 +44,12 @@ urlpatterns += [
 
     url(
         r'^bet/(?P<bet_id>\d+)/$',
+        bet_info,
+        name="tippspiel_bet_info"
+    ),
+
+    url(
+        r'^bid/(?P<bet_id>\d+)/$',
         bet_form,
         name="tippspiel_bet_form"
     ),

@@ -18,7 +18,7 @@
    <h1 class="">Неразыгранные ставки</h1>
    <ul id="Z_1" class="">
    {% for tipp in tipps %}
-      <li class="groupedListItem">
+      <li class="groupedListItem" onclick="return location.href = '{% url 'tippspiel_bet_info' tipp.id %}'">
          <h3>{{ tipp.match.team_home.name }} - {{ tipp.match.team_visitor.name }}</h3>
          <ul class="list">
             <li id="w_376108618545198" class="slip-bet-element">

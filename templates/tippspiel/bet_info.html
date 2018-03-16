@@ -1,0 +1,62 @@
+{% extends "tippspiel/base_with_bets.html" %}
+{% load i18n staticfiles gravatar %}
+{% block body %}
+<div id="wrapper">
+   <div class="downtime-alert" id="downtimeAlert" style="display: none;"></div>
+   <div class="menu menu-top menu-horizontal hidden" data-slider="true" data-level="2" data-menu-id="bets" style="opacity: 1;"></div>
+   <div class="menu menu-top menu-horizontal" data-level="3" data-sticky="false"></div>
+   <div class="banner" style="display: none;"></div>
+   <div id="content-wrap">
+      <div class="campaign campaign--tablet" data-loc="top">
+         <div></div>
+      </div>
+      <div class="slider"></div>
+      <div id="content">
+         <div class="view visible" id="betDetailsView">
+            <h1 class="title"><span></span>Подробности ставки</h1>
+            <div id="eventInfo">
+               <span class="info">Футбол - {{tip.match.team_home.country}} - {{tip.match.league.league_name}}</span> 
+               <div class="details">  <span class="dataTime">{{tip.match.date.date}}&nbsp;{{tip.match.date|date:'H:i'}}</span>   </div>
+               <h1>{{tip.match.team_home.name}} - {{tip.match.team_visitor.name}}</h1>
+               <div class="betNumber">Ставка:&nbsp;{{tip.id}}</div>
+            </div>
+            <ul id="detailsList" class="list">
+               <li>
+                  <span>Принята:</span> <span>{{tip.date.date}}&nbsp;{{tip.date|date:'H:i'}}</span>
+                  <hr>
+               </li>
+               <li>
+                  <span>Статус:</span> <span class="inGame">{{tip.state}}</span>
+                  <hr>
+               </li>
+               <li>
+                  <span>Тип ставки:</span> <span>  {{tip.bet.bet_group.bet_name}}  </span>
+                  <hr>
+               </li>
+               <li>
+                  <span>Выбор:</span> <span>{{tip.bet.bet_choice}}</span>
+                  <hr>
+               </li>
+               <li>
+                  <span>Коэффициент:</span> <span>{{tip.bet_score}}</span>
+                  <hr>
+               </li>
+               <li>
+                  <span>Сумма ставки:</span> <span>{{tip.amount}} BTC</span>
+                  <hr>
+               </li>
+               <li>
+                  <span>Макс. выигрыш :</span> <span>{{prize|floatformat:8}} BTC</span>
+                  <hr>
+               </li>
+               <li id="cashoutBlock">
+                  <span>Продажа ставки:</span> <span id="cashoutAmount"> <b>{{cancel|floatformat:8}} BTC</b>  <a id="cashoutBtn" class="button" style="opacity:1;">Продать</a>  </span> 
+                  <hr>
+               </li>
+            </ul>
+            <p class="hint">Расчет ставок осуществляется через 20 минут после фактического окончания события, но не позднее 24 часов в случае форс-мажорных обстоятельств.</p>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}

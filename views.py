@@ -91,6 +91,27 @@ def matches(request):
     )
 
 @login_required
+def bet_info(request, bet_id):
+    
+    import decimal
+    tip = get_object_or_404(Tipp, pk=bet_id)
+
+    tipps = Tipp.objects.filter(player=request.user, state = 'In Game').all()
+    
+    return render(
+        request,
+        'tippspiel/bet_info.html',
+        {
+            'tipps': tipps,
+            'tip': tip,
+            'prize': decimal.Decimal(tip.bet_score) * tip.amount,
+            'cancel':tip.amount * decimal.Decimal(0.9),
+            
+        },
+    )
+
+
+@login_required
 def bet_form(request, bet_id):
     match_bet = get_object_or_404(MatchBet, pk=bet_id)
     match = match_bet.match
