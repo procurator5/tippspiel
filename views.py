@@ -95,12 +95,18 @@ def bet_form(request, bet_id):
     match_bet = get_object_or_404(MatchBet, pk=bet_id)
     match = match_bet.match
     tipps = MatchBet.objects.filter(match=match).order_by('bet__bet_group')
+
+    bets = []
+    if request.user.is_authenticated:
+        bets = Tipp.objects.filter(player=request.user, state = 'In Game').all()
+    
     return render(
         request,
         'tippspiel/bet_form.html',
         {
             'match': match,
             'tipps': tipps,
+            'bets': bets,
             'groups': BetGroup.objects.all(),
             'tip': match_bet
         },
