@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django_bitcoin.models import Wallet
 from django.db import models
 from django.utils import timezone
 
@@ -43,6 +44,7 @@ class Match(models.Model):
     location = models.CharField(max_length=128, null=True)
     score_home = models.IntegerField(default=0)
     score_visitor = models.IntegerField(default=0)
+    wallet = models.ForeignKey("django_bitcoin.Wallet", on_delete=models.DO_NOTHING)
 
     def has_started(self):
         return self.date <= timezone.now()
@@ -53,6 +55,8 @@ class Match(models.Model):
     
     # this is not needed if small_image is created at set_image
     def save(self, *args, **kwargs):
+        self.wallet, created = Wallet.objects.get_or_create(label=self.team_home.name+"-"+self.team_visitor.name)
+        recv_address = self.wallet.receiving_address(fresh_addr=False)
         super(Match, self).save(*args, **kwargs)
         # I write bets coefficients in table 
         for bet in BetType.objects.all():
