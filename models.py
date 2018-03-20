@@ -43,6 +43,8 @@ class Match(models.Model):
     location = models.CharField(max_length=128, null=True)
     score_home = models.IntegerField(default=0)
     score_visitor = models.IntegerField(default=0)
+    xmlsoccer_matchid = models.IntegerField()
+    finished = models.BooleanField(default=False)
 
     def has_started(self):
         return self.date <= timezone.now()
@@ -58,6 +60,12 @@ class Match(models.Model):
         for bet in BetType.objects.all():
             row = MatchBet(match=self, bet=bet)
             row.save()
+
+
+    def update(self, *args, **kwargs):
+        super().update(*args, **kwargs)             
+        if self.finished ==True:
+            pass
     
     #Coefficient bid for             
     def getMainBets(self):

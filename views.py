@@ -151,12 +151,13 @@ def match_detail(request, match_id):
     )
 
 @login_required
-def settings(request):
+def bets_history(request):
     errors = []
-    return render_to_response(
-        'tippspiel/settings.html',
+    return render(
+        request,
+        'tippspiel/bets_history.html',
         {
             'errors': errors
         },
-        RequestContext(request)
     )
+    

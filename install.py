@@ -3,6 +3,8 @@
 from tippspiel.xmlsoccer import XmlSoccer
 
 from tippspiel.models import League, Team, Match
+from _datetime import timezone, timedelta
+import bet.settings
 
 class Loader_Xmlsoccer():
     def __init__(self, api_key, use_demo=True):
@@ -29,20 +31,36 @@ class Loader_Xmlsoccer():
             except KeyError:
                 pass
 
-    def LoadMatches(self):    
-        matches = self.loader.call_api(method='GetFixturesByDateInterval', startDateString='2018-03-10', endDateString='2018-05-09')
+    def LoadMatches(self):
+        # I define current date/time (startDateString) and current date +2 mouths (endDateString)
+        startDateString = timezone.now().isoformat()
+        endDateString = (timezone.now() + timedelta(days=58)).isoformat()   
+        matches = self.loader.call_api(method='GetFixturesByDateInterval', startDateString=startDateString, endDateString=endDateString)
         for match in matches:
             try:
-                row = Match()
+                row = match.objects.get(xmlsoccer_matchid=match['Id'])
+                if row == None:
+                    row = Match()
                 row.date = match['Date']
                 row.league = League.objects.get(league_name=match['League'])
                 row.team_home = Team.objects.get(name=match['HomeTeam'])
                 row.team_visitor = Team.objects.get(name=match['AwayTeam'])
                 row.round = int(match['Round'])
                 row.location = match['Location']
+                row.xmlsoccer_matchid = match['Id']
+                
+                try:
+                    row.score_home = match['HomeGoals']
+                    row.score_visitor = match['AwayGoals']
+                
+                    if match['Time'] == 'Finished':
+                        row.finished = True
+                except KeyError:
+                    pass
+                
                 row.save()
-            except KeyError:
-                pass
+            except KeyError as e:
+                print(str(e))
                         
     def clear(self):
         Match.objects.all().delete()
@@ -54,7 +72,7 @@ class Loader_Xmlsoccer():
         self.LoadLeagues()
         self.LoadTeams()
         self.LoadMatches()
-        
+                
     def strToBool(self, str):
         return True if str.upper() == "TRUE" else False
 
