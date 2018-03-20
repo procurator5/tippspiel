@@ -1,7 +1,4 @@
-{% extends "base.html" %}
-{% if user.is_activated %}
-
-{% block bets %}
+{% load i18n staticfiles activepage %}
 <div id="slipBox" class="waiting">
    <div id="slipTitle" class="empty">
       <h1>В игре ({{tipps|length}})</h1>
@@ -35,5 +32,3 @@
       {% endfor %}
    </ul>
 </div>
-{% endblock %}
-{% endif %}
