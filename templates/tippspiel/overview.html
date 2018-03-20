@@ -2,6 +2,19 @@
 {% load i18n staticfiles gravatar %}
 {% block body %}
 
+{% if form.errors %}
+<div id="modals">
+   <div>
+      <div class="modal modal--type__error modal--origin__app modal--new" data-id="error:46741">
+         <div class="ico-holder modal__icon"></div>
+         <div class="modal__content"> {{ form.non_field_errors }} </div>
+         
+         <div class="modal__buttons" onclick="return location.href = '{% url 'tippspiel_match_list' %}'"> <span data-href="" data-index="0" class="modal__button modal__button--close">Закрыть</span> </div>
+      </div>
+   </div>
+</div>
+{% endif %}
+
     <div id="wrapper">
     	<!-- Links Live/Top/All -->
 		<div class="menu menu-top menu-horizontal" data-slider="true" data-level="2" data-menu-id="bets" style="opacity: 1;">
