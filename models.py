@@ -20,7 +20,16 @@ class BetGroup(models.Model):
 class BetType(models.Model):
     bet_group = models.ForeignKey(BetGroup, on_delete=models.CASCADE)
     bet_choice = models.CharField(max_length = 128)
-    order = models.IntegerField(default=1)   
+    order = models.IntegerField(default=1)
+    min_value = models.DecimalField(
+        max_digits=16,
+        decimal_places=8,
+        default=0.00001)
+       
+    max_value = models.DecimalField(
+        max_digits=16,
+        decimal_places=8,
+        default=1.0)
 
 class Team(models.Model):
     """A team in the Bundesliga"""
@@ -58,7 +67,7 @@ class Match(models.Model):
         super(Match, self).save(*args, **kwargs)
         # I write bets coefficients in table 
         for bet in BetType.objects.all():
-            row = MatchBet(match=self, bet=bet)
+            row = MatchBet(match=self, bet=bet, max_value= bet.max_value, min_value=bet.min_value)
             row.save()
 
 
@@ -76,6 +85,15 @@ class MatchBet(models.Model):
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
     bet = models.ForeignKey(BetType, on_delete=models.CASCADE)
     score = models.FloatField(default = 1.0)
+    min_value = models.DecimalField(
+        max_digits=16,
+        decimal_places=8,
+        default=0.00001)
+       
+    max_value = models.DecimalField(
+        max_digits=16,
+        decimal_places=8,
+        default=1.0)
     
 
 

@@ -27,7 +27,7 @@
             <li> Макс. выигрыш: <span class="right" id="slipMaxWin">0</span> </li>
          </ul>
          <div class="bLiveUpdateSlip  hidden"> <input type="checkbox" id="liveUpdateSlipCheckbox" name="liveUpdateSlip"> <label class="cb-label" for="liveUpdateSlipCheckbox"></label> <label for="liveUpdateSlipCheckbox">Автоматически обновлять коэффициенты.</label> <em class="liveUpdateDetails">Подробнее</em> </div>
-         <p class="info"> Ставка от <span id="slipMinStake">10 RUB</span> до <span id="slipMaxStake">569300 RUB</span> </p>
+         <p class="info"> Ставка от <span id="slipMinStake">{{tip.min_value}} BTC</span> до <span id="slipMaxStake">{{tip.max_value}} BTC</span> </p>
       </div>
       <form method="post" action="{% url 'tippspiel_bet_result' %}">
          {% csrf_token %}
