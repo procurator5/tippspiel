@@ -1,5 +1,5 @@
-{% extends "tippspiel/base_with_bets.html" %}
-{% load i18n staticfiles gravatar %}
+{% extends "base.html" %}
+{% load i18n staticfiles %}
 {% block body %}
     <div id="wrapper">
     	<!-- Links Live/Top/All -->
@@ -52,14 +52,15 @@
                </tbody>
             </table>
          </div>
+         {% regroup matchbets by bet.bet_group as groups %}
          <ul id="betList" class="betList">
          	{% for group in groups %}
             <li class="groupedListItem" id="140552461">
-               <h3>{{group.bet_name}}</h3>
+               <h3>{{group.grouper.bet_name}}</h3>
                <table class="list cell3">
                   <tbody>
                      <tr>
-					{% for bid in match.getMainBets %}  
+					{% for bid in group.list %}  
                         <td class="">
                            <a id="140552461_214365_0" href="{% url 'tippspiel_bet_form' bid.id %}">
                               <div>{{bid.bet.bet_choice}}</div>

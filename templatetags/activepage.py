@@ -1,22 +1,12 @@
-from django.urls import reverse
-from django.template.defaultfilters import register
-from django.utils.translation import ugettext_lazy as _
+from django import template
+from tippspiel.models import Tipp 
 
-from string import Template
+register = template.Library()
 
-@register.simple_tag
-def activepage(request, url, title, icon=None):
-    s = Template('<a href="$link"$active$icon>$title</a>')
-
-    the_icon = ''
-    if not icon is None:
-        the_icon = ' data-icon="%s"' % icon
-
-    active = ''
-    #if reverse(url) == request.path:
-    #    active = ' class="ui-btn-active ui-state-persist"'
-    return s.substitute(link=reverse(url), active=active, icon=the_icon, title=str(_(title)))
-
-@register.simple_tag
-def activepage_with_icon(request, url, title, icon):
-    return activepage(request, url, title, icon)
+@register.inclusion_tag('tippspiel/modules/actual_bids.html', takes_context=True)
+def actual_bids(context):
+    request = context['request']
+    tipps = []
+    if request.user.is_authenticated:
+        tipps = Tipp.objects.filter(player=request.user, state = 'In Game').all()
+    return {'tipps': tipps}

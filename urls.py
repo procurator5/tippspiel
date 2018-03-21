@@ -5,26 +5,7 @@ from django.views.generic import DetailView, ListView, TemplateView
 from tippspiel.models import Team, Match, Tipp
 from tippspiel.views import *
 
-
 urlpatterns = [
-    url(
-        r'^logout/$',
-        auth.logout_then_login,
-        name="logout"
-    ),
-    
-    url(
-        r'^changepw/$',
-        auth.password_change,
-        {
-            'template_name': 'tippspiel/password_change.html',
-            'post_change_redirect' : '/tippspiel/settings/'
-        },
-        name="password_change"
-    ),
-]
-
-urlpatterns += [
     url(
         r'^$',
         matches,
@@ -58,6 +39,12 @@ urlpatterns += [
         r'^bet_res/$',
         bet_save,
         name="tippspiel_bet_result"
+    ),
+
+    url(
+        r'^betsHistory/$',
+        bets_history,
+        name="bets_history"
     ),
 
 ]
