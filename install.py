@@ -3,7 +3,8 @@
 from tippspiel.xmlsoccer import XmlSoccer
 
 from tippspiel.models import League, Team, Match
-from _datetime import timezone, timedelta
+from django.utils import timezone
+import datetime
 import bet.settings
 
 class Loader_Xmlsoccer():
@@ -34,12 +35,13 @@ class Loader_Xmlsoccer():
     def LoadMatches(self):
         # I define current date/time (startDateString) and current date +2 mouths (endDateString)
         startDateString = timezone.now().isoformat()
-        endDateString = (timezone.now() + timedelta(days=58)).isoformat()   
+        endDateString = (timezone.now() + datetime.timedelta(days=58)).isoformat()   
         matches = self.loader.call_api(method='GetFixturesByDateInterval', startDateString=startDateString, endDateString=endDateString)
         for match in matches:
             try:
-                row = match.objects.get(xmlsoccer_matchid=match['Id'])
-                if row == None:
+                try:
+                    row = Match.objects.get(xmlsoccer_matchid=match['Id'])
+                except Match.DoesNotExist:
                     row = Match()
                 row.date = match['Date']
                 row.league = League.objects.get(league_name=match['League'])
