@@ -18,6 +18,10 @@ class League(models.Model):
     
     def getActualMatches(self):
         return Match.objects.filter(league = self).filter(date__gte  = timezone.now()).order_by('date').all()
+
+    def __str__(self):
+        return self.league_name
+
     
 class BetGroup(models.Model):
     bet_name = models.TextField()
@@ -37,6 +41,9 @@ class BetType(models.Model):
         max_digits=16,
         decimal_places=8,
         default=1.0)
+    
+    def __str__(self):
+        return self.bet_group.bet_name + "- " + self.bet_choice
 
 class Team(models.Model):
     """A team in the Bundesliga"""
@@ -45,8 +52,8 @@ class Team(models.Model):
     country = models.CharField(max_length=128, default=None)
     stadium = models.CharField(max_length=128, null=True, default=None)
 
-    def __unicode__(self):
-        return self.handle
+    def __str__(self):
+        return self.name
 
 class Match(models.Model):
     """A match between two teams."""
@@ -73,9 +80,10 @@ class Match(models.Model):
     def save(self, *args, **kwargs):
         super(Match, self).save(*args, **kwargs)
         # I write bets coefficients in table 
-        for bet in BetType.objects.all():
-            row = MatchBet(match=self, bet=bet, max_value= bet.max_value, min_value=bet.min_value)
-            row.save()
+        if MatchBet.objects.filter(match=self).count()== 0:
+            for bet in BetType.objects.all():
+                row = MatchBet(match=self, bet=bet, max_value= bet.max_value, min_value=bet.min_value)
+                row.save()
 
 
     def update(self, *args, **kwargs):
