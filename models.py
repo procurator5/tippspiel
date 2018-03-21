@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django_bitcoin.models import Wallet
+from django_bitcoin.models import Wallet, WalletTransaction
 from django.db import models, connection
 from django.utils import timezone
 
@@ -129,5 +129,6 @@ class Tipp(models.Model):
         max_digits=16,
         decimal_places=8,
         default=0.0)
+    transaction = models.ForeignKey("django_bitcoin.WalletTransaction", on_delete=models.DO_NOTHING, null=True)
 
 
