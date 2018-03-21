@@ -52,14 +52,15 @@
                </tbody>
             </table>
          </div>
+         {% regroup bets by bet.bet_group.bet_name as groups %}
          <ul id="betList" class="betList">
          	{% for group in groups %}
             <li class="groupedListItem" id="140552461">
-               <h3>{{group.bet_name}}</h3>
+               <h3>{{group.grouper}}</h3>
                <table class="list cell3">
                   <tbody>
                      <tr>
-					{% for bid in match.getMainBets %}  
+					{% for bid in group.list %}  
                         <td class="">
                            <a id="140552461_214365_0" href="{% url 'tippspiel_bet_form' bid.id %}">
                               <div>{{bid.bet.bet_choice}}</div>

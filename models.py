@@ -1,7 +1,14 @@
 from django.contrib.auth.models import User
-from django.db import models
+from django.db import models, connection
 from django.utils import timezone
 
+def dictfetchall(cursor):
+    "Returns all rows from a cursor as a dict"
+    desc = cursor.description
+    return [
+        dict(zip([col[0] for col in desc], row))
+        for row in cursor.fetchall()
+    ]
 
 class League(models.Model):
     league_name = models.CharField(max_length = 128)
@@ -80,7 +87,8 @@ class Match(models.Model):
     def getMainBets(self):
         bets = BetType.objects.filter(bet_group__is_main = True).all()
         return MatchBet.objects.filter(match = self).filter(bet__in = bets).order_by('bet__order').all()
-
+    
+    
 class MatchBet(models.Model):
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
     bet = models.ForeignKey(BetType, on_delete=models.CASCADE)
@@ -93,8 +101,7 @@ class MatchBet(models.Model):
     max_value = models.DecimalField(
         max_digits=16,
         decimal_places=8,
-        default=1.0)
-    
+        default=1.0)    
 
 
 class Tipp(models.Model):

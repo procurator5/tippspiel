@@ -1,8 +1,7 @@
 # coding=utf-8
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, render_to_response, render
+from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_protect
-from django.template import RequestContext
 from django.utils import timezone
 
 from tippspiel.models import Match, Tipp, League, MatchBet, BetGroup
@@ -129,7 +128,7 @@ def match_detail(request, match_id):
         'tippspiel/match_detail.html',
         {
             'match': match,
-            'groups': BetGroup.objects.all()
+            'bets': MatchBet.objects.filter(match=match).all()
         },
     )
 
