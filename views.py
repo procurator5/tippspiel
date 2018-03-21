@@ -115,8 +115,8 @@ def bet_form(request, bet_id):
         {
             'match': match,
             'tipps': tipps,
-            'groups': BetGroup.objects.all(),
-            'tip': match_bet
+            'tip': match_bet,
+            'matchbets': MatchBet.objects.filter(match=match).all()
         },
     )
 
@@ -128,7 +128,7 @@ def match_detail(request, match_id):
         'tippspiel/match_detail.html',
         {
             'match': match,
-            'bets': MatchBet.objects.filter(match=match).all()
+            'matchbets': MatchBet.objects.filter(match=match).all()
         },
     )
 

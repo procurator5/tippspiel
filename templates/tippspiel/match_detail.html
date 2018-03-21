@@ -52,11 +52,11 @@
                </tbody>
             </table>
          </div>
-         {% regroup bets by bet.bet_group.bet_name as groups %}
+         {% regroup matchbets by bet.bet_group as groups %}
          <ul id="betList" class="betList">
          	{% for group in groups %}
             <li class="groupedListItem" id="140552461">
-               <h3>{{group.grouper}}</h3>
+               <h3>{{group.grouper.bet_name}}</h3>
                <table class="list cell3">
                   <tbody>
                      <tr>
