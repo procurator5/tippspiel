@@ -42,6 +42,8 @@ class BetType(models.Model):
         decimal_places=8,
         default=1.0)
     
+    handler=models.CharField(max_length = 64, null=True)
+    
     def __str__(self):
         return self.bet_group.bet_name + "- " + self.bet_choice
 
@@ -109,9 +111,8 @@ class MatchBet(models.Model):
     max_value = models.DecimalField(
         max_digits=16,
         decimal_places=8,
-        default=1.0)    
-
-
+        default=1.0)
+    
 class Tipp(models.Model):
     """A bet by a player on a match."""
     
@@ -126,4 +127,14 @@ class Tipp(models.Model):
         decimal_places=8,
         default=0.0)
 
+    def isWin(self):
+        return False
+    
+    def processing(self):
+        if self.isWin():
+            self.status = "Win"
+        else:
+            self.status = "Lose"
+            
+        self.save()    
 

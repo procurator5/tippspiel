@@ -4,6 +4,7 @@ from tippspiel.xmlsoccer import XmlSoccer
 
 from tippspiel.models import League, Team, Match
 from django.utils import timezone
+from django.db.models import Min
 import datetime
 import bet.settings
 
@@ -31,11 +32,9 @@ class Loader_Xmlsoccer():
                 row.save()
             except KeyError:
                 pass
-
-    def LoadMatches(self):
+            
+    def LoadMatches(self, startDateString, endDateString):
         # I define current date/time (startDateString) and current date +2 mouths (endDateString)
-        startDateString = timezone.now().isoformat()
-        endDateString = (timezone.now() + datetime.timedelta(days=58)).isoformat()   
         matches = self.loader.call_api(method='GetFixturesByDateInterval', startDateString=startDateString, endDateString=endDateString)
         for match in matches:
             try:
@@ -73,15 +72,27 @@ class Loader_Xmlsoccer():
         self.clear()
         self.LoadLeagues()
         self.LoadTeams()
-        self.LoadMatches()
+
+        startDateString = timezone.now().isoformat()
+        endDateString = (timezone.now() + datetime.timedelta(days=58)).isoformat()   
+        
+        self.LoadMatches(startDateString, endDateString)
                 
     def strToBool(self, str):
         return True if str.upper() == "TRUE" else False
 
+    def loadActualInfo(self):
+        startDateString  = Match.objects.filter(finished = False).all().isoformat()
+        endDateString = (timezone.now() + datetime.timedelta(days=1)).isoformat()   
+        self.LoadMatches(startDateString, endDateString)
 
 def install():
     loader = Loader_Xmlsoccer('UQDWCTZTGRCJQQOSCXEESHVITEDGUYIVUVHYBFDBFOCLEGCATM')
     loader.refreshAll()
+    
+def update():
+    loader = Loader_Xmlsoccer('UQDWCTZTGRCJQQOSCXEESHVITEDGUYIVUVHYBFDBFOCLEGCATM')
+    loader.loadActualInfo()
 
 if __name__ == '__main__':
     print("This should only be run via django's ./manage.py shell.")
