@@ -55,7 +55,9 @@ class Loader_Xmlsoccer():
                     row.score_visitor = match['AwayGoals']
                 
                     if match['Time'] == 'Finished':
-                        row.finished = True
+                        if row.finished == False:
+                            row.finished = True
+                            row.save()
                 except KeyError:
                     pass
                 
@@ -91,7 +93,7 @@ def install():
     loader = Loader_Xmlsoccer('UQDWCTZTGRCJQQOSCXEESHVITEDGUYIVUVHYBFDBFOCLEGCATM')
     loader.refreshAll()
     
-def finished():
+def actual():
     loader = Loader_Xmlsoccer('UQDWCTZTGRCJQQOSCXEESHVITEDGUYIVUVHYBFDBFOCLEGCATM')
     loader.loadActualInfo()
 
