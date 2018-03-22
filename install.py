@@ -81,17 +81,27 @@ class Loader_Xmlsoccer():
     def strToBool(self, str):
         return True if str.upper() == "TRUE" else False
 
-    def loadActualInfo(self):
-        startDateString  = Match.objects.filter(finished = False).all().isoformat()
-        endDateString = (timezone.now() + datetime.timedelta(days=1)).isoformat()   
-        self.LoadMatches(startDateString, endDateString)
+    def loadActualInfo(self):        
+        startDateString  = Match.objects.filter(finished = False).all().aggregate(Min('date'))['date__min']
+        endDateString = (timezone.now() + datetime.timedelta(days=1))
+        if endDateString > startDateString:
+            self.LoadMatches(startDateString.isoformat(), endDateString.isoformat())
 
 def install():
     loader = Loader_Xmlsoccer('UQDWCTZTGRCJQQOSCXEESHVITEDGUYIVUVHYBFDBFOCLEGCATM')
     loader.refreshAll()
     
+def finished():
+    loader = Loader_Xmlsoccer('UQDWCTZTGRCJQQOSCXEESHVITEDGUYIVUVHYBFDBFOCLEGCATM')
+    loader.loadActualInfo()
+
 def update():
     loader = Loader_Xmlsoccer('UQDWCTZTGRCJQQOSCXEESHVITEDGUYIVUVHYBFDBFOCLEGCATM')
+    startDateString = timezone.now().isoformat()
+    endDateString = (timezone.now() + datetime.timedelta(days=58)).isoformat()   
+        
+    loader.LoadMatches(startDateString, endDateString)
+
     loader.loadActualInfo()
 
 if __name__ == '__main__':
