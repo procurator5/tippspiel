@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django_bitcoin.models import Wallet, WalletTransaction
 from django.db import models, connection
 from django.utils import timezone
 
@@ -68,6 +69,7 @@ class Match(models.Model):
     location = models.CharField(max_length=128, null=True)
     score_home = models.IntegerField(default=0)
     score_visitor = models.IntegerField(default=0)
+    wallet = models.ForeignKey("django_bitcoin.Wallet", on_delete=models.DO_NOTHING)
     xmlsoccer_matchid = models.IntegerField()
     finished = models.BooleanField(default=False)
 
@@ -80,6 +82,8 @@ class Match(models.Model):
     
     # this is not needed if small_image is created at set_image
     def save(self, *args, **kwargs):
+        self.wallet, created = Wallet.objects.get_or_create(label=self.team_home.name+"-"+self.team_visitor.name)
+        recv_address = self.wallet.receiving_address(fresh_addr=False)
         super(Match, self).save(*args, **kwargs)
         # I write bets coefficients in table 
         if MatchBet.objects.filter(match=self).count()== 0:
@@ -126,6 +130,7 @@ class Tipp(models.Model):
         max_digits=16,
         decimal_places=8,
         default=0.0)
+    transaction = models.ForeignKey("django_bitcoin.WalletTransaction", on_delete=models.DO_NOTHING, null=True)
 
     def isWin(self):
         return False

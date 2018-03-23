@@ -14,11 +14,15 @@
             					<ul class="oddsholder "> 
             					{% for bid in match.getMainBets %}  
             						<li class="oddHolder outcome-1 "> 
-            							<a href="{% url 'tippspiel_bet_form' bid.id %}" id="bet{{bid.id}}">
+            							<a 
+										{% if user.is_authenticated %}  
+            								href="{% url 'tippspiel_bet_form' bid.id %}" id="bet{{bid.id}}"
+            							{% endif %}            								
+            								>
             								<span class="oddpos">{{bid.bet_choice}}</span>
             								<span class="oddnum">{{bid.score}}</span>
             								<span class="oddlock"></span>
-            							</a> 
+            							</a>
             						</li>  
             					{% endfor %}
             					</ul>  
