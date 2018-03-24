@@ -14038,7 +14038,8 @@ html.keyboard-open .compact .menu-bottom {
 	left: 0;
 	width: 80px;
 	height: 100%;
-	border-right: 1px solid #252b2f
+	border-right: 1px solid #252b2f;
+	position: fixed;
 }
 
 .wide .menu-left li,
@@ -19292,7 +19293,7 @@ body {
 }
 
 body.wide {
-	overflow: hidden;
+	overflow: visible;
 	height: 100%
 }
 
@@ -19327,7 +19328,7 @@ body.wide .profileBetList.inside .time {
 	left: 80px;
 	bottom: 0;
 	right: 310px;
-	overflow: hidden
+	overflow: visible
 }
 
 .app__product--leonbets #header a#logoMain.logoMainWide {
@@ -20162,7 +20163,8 @@ ul.oddsholder .oddpos {
 		border-top: 0
 	}
 	body.wide #slip.covered {
-		bottom: 0
+		bottom: 0;
+		overflow: hidden;
 	}
 	body.wide .gamesLiveTransferBlock>li .leftPart {
 		width: 25%;
