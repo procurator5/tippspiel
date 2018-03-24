@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django_bitcoin.models import Wallet, WalletTransaction
 from django.db import models, connection
 from django.utils import timezone
+from bbil.models import Profile
+import decimal
 
 def dictfetchall(cursor):
     "Returns all rows from a cursor as a dict"
@@ -72,6 +74,7 @@ class Match(models.Model):
     wallet = models.ForeignKey("django_bitcoin.Wallet", on_delete=models.DO_NOTHING)
     xmlsoccer_matchid = models.IntegerField()
     finished = models.BooleanField(default=False)
+    started = models.BooleanField(default=True)
 
     def has_started(self):
         return self.date <= timezone.now()
@@ -91,11 +94,17 @@ class Match(models.Model):
                 row = MatchBet(match=self, bet=bet, max_value= bet.max_value, min_value=bet.min_value)
                 row.save()
 
-
-    def update(self, *args, **kwargs):
-        super().update(*args, **kwargs)             
+    def closeMatch(self):
         if self.finished ==True:
-            pass
+            result = True
+            bank_profile = Profile.objects.filter(user__is_superuser=True).first()
+            for tip in Tipp.objects.filter(match=self, status="In Game"):
+                closed = tip.close(bank_profile.wallet)
+                result &= closed
+            if self.wallet.total_balance()>0:
+                self.wallet.send_to_wallet(bank_profile.wallet, self.wallet.total_balance())
+            return result
+        return False 
     
     #Coefficient bid for             
     def getMainBets(self):
@@ -135,11 +144,29 @@ class Tipp(models.Model):
     def isWin(self):
         return False
     
-    def processing(self):
+    def close(self, bank_wallet):
         if self.isWin():
-            self.status = "Win"
+            bitcoin_amount = self.amount * decimal.Decimal(self.score)
+            if bitcoin_amount > self.match.wallet.total_balance():
+                bank_wallet.send_to_wallet(self.match.wallet, bitcoin_amount - self.wallet.total_balance())
+                
+            player = Profile.objects.get(user = self.player)    
+            self.match.wallet.send_to_wallet(player.wallet, bitcoin_amount)
+            self.status="Win"
         else:
-            self.status = "Lose"
+            bitcoin_amount = self.match.wallet.total_balance() if self.amount > self.match.wallet.total_balance() else self.amount
+            self.match.wallet.send_to_wallet(bank_wallet, bitcoin_amount)
+                    
+            self.status="Lose"
+
             
         self.save()    
-
+    
+    def sell(self):
+        try:
+            self.match.wallet.send_to_wallet(self.player.wallet, self.amount * decimal.Decimal(0.9))
+            self.state = "Sold"
+            self.save()
+            return True
+        except Exception:
+            return False
