@@ -80,7 +80,7 @@ class Match(models.Model):
         return self.date <= timezone.now()
         
     
-    def __unicode__(self):
+    def __str__(self):
         return '%s %d:%d %s' % (self.team_home.handle, self.score_home, self.score_visitor, self.team_visitor.handle)
     
     # this is not needed if small_image is created at set_image
@@ -111,6 +111,9 @@ class Match(models.Model):
         bets = BetType.objects.filter(bet_group__is_main = True).all()
         return MatchBet.objects.filter(match = self).filter(bet__in = bets).order_by('bet__order').all()
     
+    def total_balance(self):
+        return self.wallet.total_balance()
+    
     
 class MatchBet(models.Model):
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
@@ -125,6 +128,19 @@ class MatchBet(models.Model):
         max_digits=16,
         decimal_places=8,
         default=1.0)
+    
+    def amount(self):
+        this_amount = Tipp.objects.filter(bet = self.bet, match=self.match, state="In Game").all().aggregate(models.Sum('amount'))['amount__sum']
+        return 0 if this_amount == None else this_amount
+    
+    def recomended_score(self):
+        this_amount = self.amount()
+        if this_amount <= 0:
+            return "0/x"
+        that_amount = self.match.total_balance() - this_amount
+        if that_amount <= 0:
+            return "x/0"
+        return float((self.match.total_balance() * decimal.Decimal(0.9))/this_amount)
     
 class Tipp(models.Model):
     """A bet by a player on a match."""
