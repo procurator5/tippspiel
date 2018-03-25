@@ -20,7 +20,7 @@
             <li id="w_376108618545198" class="slip-bet-element">
                <div data-id="376108618545198" class="right sell-bet-active" data-cashoutamount="8.9">
                   <div class="right-inner">{{tipp.bet_score}}<span>@</span>{{tipp.amount}}</div>
-                  <div class="sell-bet-wrapper"><i class="icon-bet-sell"></i></div>
+                  <div class="sell-bet-wrapper" onclick="return location.href = '{% url 'bet_sell' tipp.id %}'"><i class="icon-bet-sell"></i></div>
                </div>
                <div class="holder">
                   <div class="betType">{{tipp.bet.bet_group.bet_short_name}}&nbsp;-&nbsp;</div>

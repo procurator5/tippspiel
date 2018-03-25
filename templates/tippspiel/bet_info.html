@@ -50,7 +50,7 @@
                   <hr>
                </li>
                <li id="cashoutBlock">
-                  <span>Продажа ставки:</span> <span id="cashoutAmount"> <b>{{cancel|floatformat:8}} BTC</b>  <a id="cashoutBtn" class="button" style="opacity:1;">Продать</a>  </span> 
+                  <span>Продажа ставки:</span> <span id="cashoutAmount"> <b>{{cancel|floatformat:8}} BTC</b>  <a id="cashoutBtn" class="button" style="opacity:1;" onclick="return location.href = '{% url 'bet_sell' tip.id %}'">Продать</a>  </span> 
                   <hr>
                </li>
             </ul>
