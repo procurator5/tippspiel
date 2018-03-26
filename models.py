@@ -158,7 +158,16 @@ class Tipp(models.Model):
     transaction = models.ForeignKey("django_bitcoin.WalletTransaction", on_delete=models.DO_NOTHING, null=True)
 
     def isWin(self):
-        return False
+        c = connection.cursor()
+        try:
+            c.callproc("iswin", (self.id))
+            results = c.fetchall()
+            print(results)
+            return results[0][0]
+        finally:
+            c.close()
+            return False
+        return False     
     
     def close(self, bank_wallet):
         if self.isWin():
