@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
 from tippspiel.install import Loader_Xmlsoccer
+from tippspiel.models import Match
 
 
 class Command(BaseCommand):
@@ -10,6 +11,5 @@ class Command(BaseCommand):
         print("starting...")
         loader = Loader_Xmlsoccer('UQDWCTZTGRCJQQOSCXEESHVITEDGUYIVUVHYBFDBFOCLEGCATM')
         loader.loadActualInfo()
-
 
 

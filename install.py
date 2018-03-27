@@ -66,7 +66,7 @@ class Loader_Xmlsoccer():
                 row.save()
             except KeyError as e:
                 print(str(e))
-                        
+                            
     def clear(self):
         Match.objects.all().delete()
         League.objects.all().delete()

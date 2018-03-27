@@ -19,12 +19,10 @@ BEGIN
 	EXECUTE 'SELECT '|| v_bet_proc ||'($1);'
 	   INTO v_res
 	   USING v_match_id;
+	RETURN v_res;
  END IF;
  RETURN FALSE;
 END;
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION iswin(integer)
-  OWNER TO postgres;
-

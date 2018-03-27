@@ -98,7 +98,7 @@ class Match(models.Model):
         if self.finished ==True:
             result = True
             bank_profile = Profile.objects.filter(user__is_superuser=True).first()
-            for tip in Tipp.objects.filter(match=self, status="In Game"):
+            for tip in Tipp.objects.filter(match=self, state="In Game"):
                 closed = tip.close(bank_profile.wallet)
                 result &= closed
             if self.wallet.total_balance()>0:
@@ -160,32 +160,33 @@ class Tipp(models.Model):
     def isWin(self):
         c = connection.cursor()
         try:
-            c.callproc("iswin", (self.id))
+            c.callproc("iswin", (self.id, ))
             results = c.fetchall()
-            print(results)
+            c.close()
             return results[0][0]
-        finally:
+        except Exception:
             c.close()
             return False
-        return False     
     
     def close(self, bank_wallet):
         if self.isWin():
-            bitcoin_amount = self.amount * decimal.Decimal(self.score)
+            bitcoin_amount = round(self.amount * decimal.Decimal(self.bet_score), 8)
             if bitcoin_amount > self.match.wallet.total_balance():
-                bank_wallet.send_to_wallet(self.match.wallet, bitcoin_amount - self.wallet.total_balance())
+                bank_wallet.send_to_wallet(self.match.wallet, bitcoin_amount - self.match.wallet.total_balance())
                 
             player = Profile.objects.get(user = self.player)    
             self.match.wallet.send_to_wallet(player.wallet, bitcoin_amount)
-            self.status="Win"
+            self.state="Win"
         else:
-            bitcoin_amount = self.match.wallet.total_balance() if self.amount > self.match.wallet.total_balance() else self.amount
-            self.match.wallet.send_to_wallet(bank_wallet, bitcoin_amount)
+            bitcoin_amount = round(self.match.wallet.total_balance() if self.amount > self.match.wallet.total_balance() else self.amount, 8)
+            if bitcoin_amount > 0: 
+                self.match.wallet.send_to_wallet(bank_wallet, bitcoin_amount)
                     
-            self.status="Lose"
+            self.state="Lose"
 
             
-        self.save()    
+        self.save()
+        return True    
     
     def sell(self):
         try:
