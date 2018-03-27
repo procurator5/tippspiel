@@ -86,8 +86,10 @@ class Loader_Xmlsoccer():
         return True if str.upper() == "TRUE" else False
 
     def loadActualInfo(self):        
-        startDateString  = Match.objects.filter(finished = False).all().aggregate(Min('date'))['date__min']
-        endDateString = (timezone.now() + datetime.timedelta(days=1))
+        #startDateString  = Match.objects.filter(finished = False).all().aggregate(Min('date'))['date__min']
+        #endDateString = (timezone.now() + datetime.timedelta(days=1))
+        startDateString = (timezone.now() - datetime.timedelta(days=2))
+        endDateString = (timezone.now() + datetime.timedelta(days=50))   
         if endDateString > startDateString:
             self.LoadMatches(startDateString.isoformat(), endDateString.isoformat())
 

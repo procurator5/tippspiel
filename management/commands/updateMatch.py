@@ -9,7 +9,7 @@ class Command(BaseCommand):
 
     def handle(self, **options):
         print("starting...")
-        loader = Loader_Xmlsoccer('UQDWCTZTGRCJQQOSCXEESHVITEDGUYIVUVHYBFDBFOCLEGCATM')
+        loader = Loader_Xmlsoccer('UQDWCTZTGRCJQQOSCXEESHVITEDGUYIVUVHYBFDBFOCLEGCATM')        
         loader.loadActualInfo()
 
 
