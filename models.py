@@ -196,3 +196,13 @@ class Tipp(models.Model):
             return True
         except Exception:
             return False
+    
+    def toAccount(self):
+        if self.state == "Sold":
+            return round(self.amount *  decimal.Decimal(0.9), 8)
+        if self.state == "Win": 
+            return round(self.amount * decimal.Decimal(self.bet_score), 8)
+        if self.state == "In Game":
+            return "In Game"
+        return 0 
+        

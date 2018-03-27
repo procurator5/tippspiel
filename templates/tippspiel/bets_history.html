@@ -70,160 +70,39 @@
       <div class="slider"></div>
       <div id="content">
          <div class="view visible" id="betsHistoryView">
+         {% for tipp in tipps %}
             <ul id="BetHistoryList" class="profileBetList list">
                <li class="history24">
                   <a id="374519991009238">
                      <div class="historyDetails">
                         <div class="historyBetDetails">
-                           <div class="out"><span>-10.00&nbsp;RUB</span><span class="creditdesc">Со счета</span></div>
-                           <div class="non"><span>В игре</span><span class="creditdesc">На счет</span></div>
+                           <div class="out"><span>{{tipp.amount}}&nbsp;BTC</span><span class="creditdesc">Со счета</span></div>
+                           {% if tipp.state == 'Sold' or tipp.state == 'Win' %}
+                           <div class="in">                           
+                           {% else %} 
+                           <div class="non">
+                           {% endif %}
+                           		<span>{{ tipp.toAccount }}</span><span class="creditdesc">На счет</span>
+                           </div>
                         </div>
-                        <div class="listLeftHolder non">
-                           <div class="time">  <span class="ico-holder"></span><span>20 Март 17:39</span>  </div>
-                           <div class="betTitle">Гранада - Нумансия</div>
-                           <div class="paymentId"></div>
-                           <div class="betType">1X2</div>
-                           <div class="betChoice">X <span>@</span> 2.90</div>
-                        </div>
-                     </div>
-                     <span class="chevron"></span>
-                  </a>
-                  <hr>
-               </li>
-               <li class="history24">
-                  <a id="378206501750020">
-                     <div class="historyDetails">
-                        <div class="historyBetDetails">
-                           <div class="out"><span>-10.00&nbsp;RUB</span><span class="creditdesc">Со счета</span></div>
-                           <div class="non"><span>В игре</span><span class="creditdesc">На счет</span></div>
-                        </div>
-                        <div class="listLeftHolder non">
-                           <div class="time">  <span class="ico-holder"></span><span>20 Март 17:37</span>  </div>
-                           <div class="betTitle">Ванкувер Уайткепс - Los Angeles Galaxy</div>
-                           <div class="paymentId"></div>
-                           <div class="betType">1X2</div>
-                           <div class="betChoice">1 <span>@</span> 1.66</div>
-                        </div>
-                     </div>
-                     <span class="chevron"></span>
-                  </a>
-                  <hr>
-               </li>
-               <li class="history24">
-                  <a id="377237196164817">
-                     <div class="historyDetails">
-                        <div class="historyBetDetails">
-                           <div class="out"><span>-10.00&nbsp;RUB</span><span class="creditdesc">Со счета</span></div>
-                           <div class="non"><span>0.00</span><span class="creditdesc">На счет</span></div>
-                        </div>
-                        <div class="listLeftHolder non">
-                           <div class="time">  <span class="ico-holder"></span><span>16 Март 15:11</span>  </div>
-                           <div class="betTitle">Шепши - FC Voluntari</div>
-                           <div class="paymentId"></div>
-                           <div class="betType">1X2</div>
-                           <div class="betChoice">2 <span>@</span> 3.32</div>
-                        </div>
-                     </div>
-                     <span class="chevron"></span>
-                  </a>
-                  <hr>
-               </li>
-               <li class="history24">
-                  <a id="376108618545198">
-                     <div class="historyDetails">
-                        <div class="historyBetDetails">
-                           <div class="out"><span>-10.00&nbsp;RUB</span><span class="creditdesc">Со счета</span></div>
-                           <div class="in"><span>+8.90&nbsp;RUB</span><span class="creditdesc">Продан</span></div>
-                        </div>
+                       {% if tipp.state == 'Sell' or tipp.state == 'Win' %}
                         <div class="listLeftHolder in">
-                           <div class="time">  <span class="ico-holder"></span><span>15 Март 17:46</span>  </div>
-                           <div class="betTitle">Мазеруэлл - Селтик</div>
-                           <div class="paymentId"></div>
-                           <div class="betType">1X2</div>
-                           <div class="betChoice">2 <span>@</span> 0.89</div>
-                        </div>
-                     </div>
-                     <span class="chevron"></span>
-                  </a>
-                  <hr>
-               </li>
-               <li class="history24">
-                  <a id="375591494230356">
-                     <div class="historyDetails">
-                        <div class="historyBetDetails">
-                           <div class="out"><span>-10.00&nbsp;RUB</span><span class="creditdesc">Со счета</span></div>
-                           <div class="in"><span>+11.60&nbsp;RUB</span><span class="creditdesc">На счет</span></div>
-                        </div>
-                        <div class="listLeftHolder in">
-                           <div class="time">  <span class="ico-holder"></span><span>14 Март 17:57</span>  </div>
-                           <div class="betTitle">Бешикташ - Бавария</div>
-                           <div class="paymentId"></div>
-                           <div class="betType">1X2</div>
-                           <div class="betChoice">X2 <span>@</span> 1.16</div>
-                        </div>
-                     </div>
-                     <span class="chevron"></span>
-                  </a>
-                  <hr>
-               </li>
-               <li class="history24">
-                  <a id="377302409345229">
-                     <div class="historyDetails">
-                        <div class="historyBetDetails">
-                           <div class="out"><span>-10.00&nbsp;RUB</span><span class="creditdesc">Со счета</span></div>
-                           <div class="in"><span>+10.20&nbsp;RUB</span><span class="creditdesc">На счет</span></div>
-                        </div>
-                        <div class="listLeftHolder in">
-                           <div class="time">  <span class="ico-holder"></span><span>14 Март 17:54</span>  </div>
-                           <div class="betTitle">TJ Iskra Borcice - МСК Жилина</div>
-                           <div class="paymentId"></div>
-                           <div class="betType">1X2</div>
-                           <div class="betChoice">2 <span>@</span> 1.02</div>
-                        </div>
-                     </div>
-                     <span class="chevron"></span>
-                  </a>
-                  <hr>
-               </li>
-               <li class="history24">
-                  <a id="377240035176179">
-                     <div class="historyDetails">
-                        <div class="historyBetDetails">
-                           <div class="out"><span>-10.00&nbsp;RUB</span><span class="creditdesc">Со счета</span></div>
-                           <div class="in"><span>+12.20&nbsp;RUB</span><span class="creditdesc">На счет</span></div>
-                        </div>
-                        <div class="listLeftHolder in">
-                           <div class="time">  <span class="ico-holder"></span><span>13 Март 14:10</span>  </div>
-                           <div class="betTitle">Рома - Шахтер</div>
-                           <div class="paymentId"></div>
-                           <div class="betType">Тотал</div>
-                           <div class="betChoice">Меньше (4.5) <span>@</span> 1.22</div>
-                        </div>
-                     </div>
-                     <span class="chevron"></span>
-                  </a>
-                  <hr>
-               </li>
-               <li class="history24">
-                  <a id="374349551472581">
-                     <div class="historyDetails">
-                        <div class="historyBetDetails">
-                           <div class="out"><span>-10.00&nbsp;RUB</span><span class="creditdesc">Со счета</span></div>
-                           <div class="non"><span>0.00</span><span class="creditdesc">На счет</span></div>
-                        </div>
+                       {% else %} 
                         <div class="listLeftHolder non">
-                           <div class="time">  <span class="ico-holder"></span><span>13 Март 13:47</span>  </div>
-                           <div class="betTitle">Ман Юнайтед - Севилья</div>
+                       {% endif %}
+                           <div class="time">  <span class="ico-holder"></span><span>{{tipp.date|date:'d M o H:i'}}</span>  </div>
+                           <div class="betTitle">{{tipp.match.team_home.name}} - {{tipp.match.team_visitor.name}}</div>
                            <div class="paymentId"></div>
-                           <div class="betType">1X2</div>
-                           <div class="betChoice">1X <span>@</span> 1.16</div>
+                           <div class="betType">{{tipp.bet.bet_group.bet_name}}</div>
+                           <div class="betChoice">{{tipp.bet.bet_choice}} <span>@</span> {{tipp.bet_score}}</div>
                         </div>
                      </div>
                      <span class="chevron"></span>
                   </a>
                   <hr>
                </li>
-               <li class="history20">
+              {% endfor %}
+               <!-- li class="history20">
                   <a id="">
                      <div class="historyDetails">
                         <div class="historyBetDetails">
@@ -240,7 +119,7 @@
                      <span class="chevron"></span>
                   </a>
                   <hr>
-               </li>
+               </li-->
             </ul>
          </div>
       </div>

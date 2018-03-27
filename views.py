@@ -172,12 +172,11 @@ def match_detail(request, match_id):
 
 @login_required
 def bets_history(request):
-    errors = []
     return render(
         request,
         'tippspiel/bets_history.html',
         {
-            'errors': errors
+            'tipps': Tipp.objects.filter(player=request.user).all()
         },
     )
     
