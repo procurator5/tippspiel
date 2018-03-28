@@ -170,7 +170,6 @@ class Tipp(models.Model):
         max_digits=16,
         decimal_places=8,
         default=0.0)
-    transaction = models.ForeignKey("django_bitcoin.WalletTransaction", on_delete=models.DO_NOTHING, null=True)
 
     def isWin(self):
         c = connection.cursor()
@@ -184,6 +183,7 @@ class Tipp(models.Model):
             return False
     
     def close(self, bank_wallet):
+        transaction = None
         if self.isWin():
             bitcoin_amount = round(self.amount * decimal.Decimal(self.bet_score), 8)
             if bitcoin_amount > self.match.wallet.total_balance():
@@ -201,16 +201,28 @@ class Tipp(models.Model):
 
             
         self.save()
+
+        state = TippState()
+        state.tipp = self
+        state.state = self.state
+        state.transaction = transaction
+        state.save()
+        
         return True    
     
     def sell(self):
-        try:
-            self.match.wallet.send_to_wallet(self.player.wallet, self.amount * decimal.Decimal(0.9))
-            self.state = "Sold"
-            self.save()
-            return True
-        except Exception:
-            return False
+        
+        player = Profile.objects.get(user = self.player)    
+        transaction = self.match.wallet.send_to_wallet(player.wallet, self.amount * decimal.Decimal(0.9))
+        self.state = "Sold"
+        self.save()
+            
+        #add new TippState
+        state = TippState()
+        state.tipp = self
+        state.state = self.state
+        state.transaction = transaction
+        state.save()
     
     def toAccount(self):
         if self.state == "Sold":
@@ -221,3 +233,36 @@ class Tipp(models.Model):
             return "In Game"
         return 0 
         
+    @staticmethod
+    def create(user, bet, amount):
+        if amount > bet.min_value and amount<bet.max_value:
+            # Make transaction
+            profile = Profile.objects.get(user=user)
+            if profile.wallet.total_balance()>=amount:
+                row =Tipp()
+                transaction = profile.wallet.send_to_wallet(bet.match.wallet, amount)
+                
+                row.player = user
+                row.bet_score = bet.score
+                row.match = bet.match
+                row.amount = amount
+                row.bet = bet.bet
+                row.save()
+                
+                #add new TippState
+                state = TippState()
+                state.tipp = row
+                state.transaction = transaction
+                state.save()                
+            else:
+                raise Exception("Your balance does not have enough funds to bid")
+        else:
+            raise Exception("Your bet is too small or too high. Change the amount and try again")        
+        
+class TippState(models.Model):
+    tipp = models.ForeignKey(Tipp, on_delete=models.DO_NOTHING)
+    state = models.CharField(max_length=128, default='InGame')
+    date = models.DateTimeField(default = timezone.now)
+    transaction = models.ForeignKey("django_bitcoin.WalletTransaction", on_delete=models.DO_NOTHING, null=True)
+    
+
