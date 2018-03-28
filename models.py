@@ -79,7 +79,16 @@ class Match(models.Model):
 
     def has_started(self):
         return self.date <= timezone.now()
+    
+    def minutes(self):
+        if self.has_started():
+            return (timezone.now() - self.date).seconds//60
+        return 0
         
+    def times(self):
+        if self.has_started():
+            return self.minutes()//45 +1
+        return "NoN"
     
     def __str__(self):
         return '%s %d:%d %s' % (self.team_home.handle, self.score_home, self.score_visitor, self.team_visitor.handle)

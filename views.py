@@ -115,7 +115,7 @@ def bet_sell(request, bet_id):
 #@login_required
 #@csrf_protect
 def matches(request):
-    matches = Match.objects.filter(league__is_enabled = True).filter(date__gte  = timezone.now()).all().order_by("date")
+    matches = Match.objects.filter(league__is_enabled = True).filter(finished  = False).all().order_by("date")
     return render(
         request,
         'tippspiel/matches_list.html',
