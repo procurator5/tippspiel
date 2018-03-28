@@ -4,13 +4,12 @@ from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_protect
 from django.utils import timezone
 
-from tippspiel.models import Match, Tipp, League, MatchBet, BetGroup
+from tippspiel.models import Match, Tipp, League, MatchBet
 from bbil.models import Profile
 
 from django import template
 import decimal
 from bbil.views import profile
-from django.template.context_processors import request
 
 
 register = template.Library()
@@ -166,7 +165,7 @@ def match_detail(request, match_id):
         'tippspiel/match_detail.html',
         {
             'match': match,
-            'matchbets': MatchBet.objects.filter(match=match).all()
+            'matchbets': match.getAllBets(),
         },
     )
 

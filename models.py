@@ -4,6 +4,7 @@ from django.db import models, connection
 from django.utils import timezone
 from bbil.models import Profile
 import decimal
+from email.policy import default
 
 def dictfetchall(cursor):
     "Returns all rows from a cursor as a dict"
@@ -111,6 +112,9 @@ class Match(models.Model):
         bets = BetType.objects.filter(bet_group__is_main = True).all()
         return MatchBet.objects.filter(match = self).filter(bet__in = bets).order_by('bet__order').all()
     
+    def getAllBets(self):
+        return MatchBet.objects.filter(match=self).filter(models.Q(bet__bet_group__is_main = True) | models.Q(is_enabled=True)).all()
+    
     def total_balance(self):
         return self.wallet.total_balance()
     
@@ -128,6 +132,8 @@ class MatchBet(models.Model):
         max_digits=16,
         decimal_places=8,
         default=1.0)
+    
+    is_enabled=models.BooleanField(default=True)
     
     def amount(self):
         this_amount = Tipp.objects.filter(bet = self.bet, match=self.match, state="In Game").all().aggregate(models.Sum('amount'))['amount__sum']
