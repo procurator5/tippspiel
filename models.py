@@ -1,10 +1,13 @@
 from django.contrib.auth.models import User
 from django_bitcoin.models import Wallet, WalletTransaction
 from django.db import models, connection
+from django.db.models import Q, Avg
 from django.utils import timezone
 from bbil.models import Profile
 import decimal
-from email.policy import default
+
+from datetime import timedelta
+
 
 def dictfetchall(cursor):
     "Returns all rows from a cursor as a dict"
@@ -47,6 +50,7 @@ class BetType(models.Model):
         default=1.0)
     
     handler=models.CharField(max_length = 64, null=True)
+    xmlsoccer_tagname = models.CharField(max_length=64, null=True)
     
     def __str__(self):
         return self.bet_group.bet_name + "- " + self.bet_choice
@@ -127,6 +131,15 @@ class Match(models.Model):
     def total_balance(self):
         return self.wallet.total_balance()
     
+    def needUpdateOdds(self):
+        if MatchBet.objects.filter(match = self).filter( Q( update__isnull = True) | Q(update__lte = timezone.now() - timedelta(days=1))).count() == 0:
+            return False
+        return True
+    
+    def updateOdds(self):
+        for bet in MatchBet.objects.filter(match = self).all():
+            bet.calculate()
+    
     
 class MatchBet(models.Model):
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
@@ -143,6 +156,8 @@ class MatchBet(models.Model):
         default=1.0)
     
     is_enabled=models.BooleanField(default=True)
+    update = models.DateTimeField(null=True)
+    is_manual = models.BooleanField(default = False)
     
     def amount(self):
         this_amount = Tipp.objects.filter(bet = self.bet, match=self.match, state="In Game").all().aggregate(models.Sum('amount'))['amount__sum']
@@ -156,6 +171,20 @@ class MatchBet(models.Model):
         if that_amount <= 0:
             return "x/0"
         return float((self.match.total_balance() * decimal.Decimal(0.9))/this_amount)
+    
+    def calculate(self):
+        if self.is_manual ==False:
+            score = MatchBetHelper.objects.filter(matchbet=self).all().aggregate(Avg('score'))['score__avg']
+            score = round(0 if score ==None else score, 2)
+            if score > 1:
+                self.score=score
+                self.save()
+    
+class MatchBetHelper(models.Model):
+    matchbet = models.ForeignKey(MatchBet, on_delete=models.CASCADE)
+    bookmaker = models.CharField(max_length=64)    
+    updated = models.DateTimeField(null=True)
+    score = models.FloatField(default=0)
     
 class Tipp(models.Model):
     """A bet by a player on a match."""

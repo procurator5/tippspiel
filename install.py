@@ -2,11 +2,12 @@
 # coding=utf-8
 from tippspiel.xmlsoccer import XmlSoccer
 
-from tippspiel.models import League, Team, Match
+from tippspiel.models import League, Team, Match, MatchBet, MatchBetHelper
 from django.utils import timezone
 from django.db.models import Min
-import datetime
+from datetime import timedelta
 import bet.settings
+from numpy.lib.npyio import save
 
 class Loader_Xmlsoccer():
     def __init__(self, api_key, use_demo=True):
@@ -64,8 +65,15 @@ class Loader_Xmlsoccer():
                     pass
                 
                 row.save()
+                
             except KeyError as e:
                 print(str(e))
+            
+            print(row.id)
+            if row.needUpdateOdds():
+                self.loadOddsForMatch(row)
+                
+            row.updateOdds()                                    
                             
     def clear(self):
         Match.objects.all().delete()
@@ -78,18 +86,34 @@ class Loader_Xmlsoccer():
         self.LoadTeams()
 
         startDateString = timezone.now().isoformat()
-        endDateString = (timezone.now() + datetime.timedelta(days=58)).isoformat()   
+        endDateString = (timezone.now() + timedelta(days=58)).isoformat()   
         
         self.LoadMatches(startDateString, endDateString)
                 
     def strToBool(self, str):
         return True if str.upper() == "TRUE" else False
+    
+    def loadOddsForMatch(self, match):
+        saved = False
+        odds = self.loader.GetAllOddsByFixtureMatchId(fixtureMatch_Id=match.xmlsoccer_matchid)
+        for odd in odds:
+            print(odd)
+            for bet in MatchBet.objects.filter(match = match, bet__bet_group__bet_name = odd['Type']).all():
+                bethelper = MatchBetHelper()
+                bethelper.bookmaker = odd["Bookmaker"]
+                bethelper.updated=odd['UpdatedDate']
+                bethelper.score = float(odd[bet.bet.xmlsoccer_tagname])
+                bethelper.matchbet=bet
+                bethelper.save()
+                saved=True  
+        if saved:
+            MatchBet.objects.filter(match=match).update(update=timezone.now())
 
     def loadActualInfo(self):        
         #startDateString  = Match.objects.filter(finished = False).all().aggregate(Min('date'))['date__min']
         #endDateString = (timezone.now() + datetime.timedelta(days=1))
-        startDateString = (timezone.now() - datetime.timedelta(days=2))
-        endDateString = (timezone.now() + datetime.timedelta(days=50))   
+        startDateString = (timezone.now() - timedelta(days=2))
+        endDateString = (timezone.now() + timedelta(days=50))   
         if endDateString > startDateString:
             self.LoadMatches(startDateString.isoformat(), endDateString.isoformat())
 
@@ -104,7 +128,7 @@ def actual():
 def update():
     loader = Loader_Xmlsoccer('UQDWCTZTGRCJQQOSCXEESHVITEDGUYIVUVHYBFDBFOCLEGCATM')
     startDateString = timezone.now().isoformat()
-    endDateString = (timezone.now() + datetime.timedelta(days=58)).isoformat()   
+    endDateString = (timezone.now() + timedelta(days=58)).isoformat()   
         
     loader.LoadMatches(startDateString, endDateString)
 
