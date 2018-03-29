@@ -8,7 +8,8 @@
     "order": 1,
     "min_value": "0.00001000",
     "max_value": "1.00000000",
-    "handler": "\"win-1x2-1\""
+    "handler": "\"win-1x2-1\"",
+    "xmlsoccer_tagname": "HomeOdds"
   }
 },
 {
@@ -20,7 +21,8 @@
     "order": 2,
     "min_value": "0.00001000",
     "max_value": "1.00000000",
-    "handler": "\"win-1x2-x\""
+    "handler": "\"win-1x2-x\"",
+    "xmlsoccer_tagname": "DrawOdds"
   }
 },
 {
@@ -32,7 +34,8 @@
     "order": 3,
     "min_value": "0.00001000",
     "max_value": "1.00000000",
-    "handler": "\"win-1x2-2\""
+    "handler": "\"win-1x2-2\"",
+    "xmlsoccer_tagname": "AwayOdds"
   }
 },
 {
@@ -40,11 +43,12 @@
   "pk": 5,
   "fields": {
     "bet_group": 2,
-    "bet_choice": "\u041c\u0435\u043d\u044c\u0448\u0435 (0.5)",
+    "bet_choice": "Under (2.5)",
     "order": 1,
     "min_value": "0.00001000",
     "max_value": "1.00000000",
-    "handler": "\"total-less-0.5\""
+    "handler": "\"total-less-2.5\"",
+    "xmlsoccer_tagname": "HomeOdds"
   }
 },
 {
@@ -52,11 +56,12 @@
   "pk": 6,
   "fields": {
     "bet_group": 2,
-    "bet_choice": "\u0411\u043e\u043b\u044c\u0448\u0435 (0.5)",
+    "bet_choice": "Over (2.5)",
     "order": 2,
     "min_value": "0.00001000",
     "max_value": "1.00000000",
-    "handler": "\"total-more-0.5\""
+    "handler": "\"total-more-2.5\"",
+    "xmlsoccer_tagname": "AwayOdds"
   }
 },
 {
@@ -64,11 +69,12 @@
   "pk": 7,
   "fields": {
     "bet_group": 3,
-    "bet_choice": "\u041c\u0435\u043d\u044c\u0448\u0435 (1.5)",
+    "bet_choice": "1X",
     "order": 1,
     "min_value": "0.00001000",
     "max_value": "1.00000000",
-    "handler": "\"total-less-1.5\""
+    "handler": "\"dchance-1X\"",
+    "xmlsoccer_tagname": "HomeOdds"
   }
 },
 {
@@ -76,131 +82,25 @@
   "pk": 8,
   "fields": {
     "bet_group": 3,
-    "bet_choice": "\u0411\u043e\u043b\u044c\u0448\u0435 (1.5)",
+    "bet_choice": "12",
     "order": 2,
     "min_value": "0.00001000",
     "max_value": "1.00000000",
-    "handler": "\"total-more-2.5\""
+    "handler": "\"dchance-12\"",
+    "xmlsoccer_tagname": "DrawOdds"
   }
 },
 {
   "model": "tippspiel.bettype",
   "pk": 9,
   "fields": {
-    "bet_group": 4,
-    "bet_choice": "\u041c\u0435\u043d\u044c\u0448\u0435 (2.5)",
-    "order": 1,
+    "bet_group": 3,
+    "bet_choice": "X2",
+    "order": 3,
     "min_value": "0.00001000",
     "max_value": "1.00000000",
-    "handler": "\"total-less-2.5\""
-  }
-},
-{
-  "model": "tippspiel.bettype",
-  "pk": 10,
-  "fields": {
-    "bet_group": 4,
-    "bet_choice": "\u0411\u043e\u043b\u044c\u0448\u0435 (2.5)",
-    "order": 2,
-    "min_value": "0.00001000",
-    "max_value": "1.00000000",
-    "handler": "\"total-more-2.5\""
-  }
-},
-{
-  "model": "tippspiel.bettype",
-  "pk": 11,
-  "fields": {
-    "bet_group": 5,
-    "bet_choice": "\u041c\u0435\u043d\u044c\u0448\u0435 (3.5)",
-    "order": 1,
-    "min_value": "0.00001000",
-    "max_value": "1.00000000",
-    "handler": "\"total-less-3.5\""
-  }
-},
-{
-  "model": "tippspiel.bettype",
-  "pk": 12,
-  "fields": {
-    "bet_group": 5,
-    "bet_choice": "\u0411\u043e\u043b\u044c\u0448\u0435 (3.5)",
-    "order": 2,
-    "min_value": "0.00001000",
-    "max_value": "1.00000000",
-    "handler": "\"total-more-3.5\""
-  }
-},
-{
-  "model": "tippspiel.bettype",
-  "pk": 13,
-  "fields": {
-    "bet_group": 6,
-    "bet_choice": "\u041c\u0435\u043d\u044c\u0448\u0435 (4.5)",
-    "order": 1,
-    "min_value": "0.00001000",
-    "max_value": "1.00000000",
-    "handler": "\"total-less-4.5\""
-  }
-},
-{
-  "model": "tippspiel.bettype",
-  "pk": 14,
-  "fields": {
-    "bet_group": 6,
-    "bet_choice": "\u0411\u043e\u043b\u044c\u0448\u0435 (4.5)",
-    "order": 2,
-    "min_value": "0.00001000",
-    "max_value": "1.00000000",
-    "handler": "\"total-more-4.5\""
-  }
-},
-{
-  "model": "tippspiel.bettype",
-  "pk": 15,
-  "fields": {
-    "bet_group": 7,
-    "bet_choice": "\u041c\u0435\u043d\u044c\u0448\u0435 (5.5)",
-    "order": 1,
-    "min_value": "0.00001000",
-    "max_value": "1.00000000",
-    "handler": "\"total-less-5.5\""
-  }
-},
-{
-  "model": "tippspiel.bettype",
-  "pk": 16,
-  "fields": {
-    "bet_group": 7,
-    "bet_choice": "\u0411\u043e\u043b\u044c\u0448\u0435 (5.5)",
-    "order": 2,
-    "min_value": "0.00001000",
-    "max_value": "1.00000000",
-    "handler": "\"total-more-5.5\""
-  }
-},
-{
-  "model": "tippspiel.bettype",
-  "pk": 17,
-  "fields": {
-    "bet_group": 8,
-    "bet_choice": "\u041c\u0435\u043d\u044c\u0448\u0435 (6.5)",
-    "order": 1,
-    "min_value": "0.00001000",
-    "max_value": "1.00000000",
-    "handler": "\"total-less-6.5\""
-  }
-},
-{
-  "model": "tippspiel.bettype",
-  "pk": 18,
-  "fields": {
-    "bet_group": 8,
-    "bet_choice": "\u0411\u043e\u043b\u044c\u0448\u0435 (6.5)",
-    "order": 2,
-    "min_value": "0.00001000",
-    "max_value": "1.00000000",
-    "handler": "\"total-more-6.5\""
+    "handler": "\"dchance-X2\"",
+    "xmlsoccer_tagname": "AwayOdds"
   }
 }
 ]

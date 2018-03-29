@@ -3,8 +3,8 @@
   "model": "tippspiel.betgroup",
   "pk": 1,
   "fields": {
-    "bet_name": "1X2",
-    "bet_short_name": "1X2",
+    "bet_name": "1x2",
+    "bet_short_name": "1x2",
     "is_main": true
   }
 },
@@ -12,8 +12,8 @@
   "model": "tippspiel.betgroup",
   "pk": 2,
   "fields": {
-    "bet_name": "TOTAL",
-    "bet_short_name": "TOTAL",
+    "bet_name": "Over/Under 2.5",
+    "bet_short_name": "Over/Under ",
     "is_main": false
   }
 },
@@ -21,53 +21,8 @@
   "model": "tippspiel.betgroup",
   "pk": 3,
   "fields": {
-    "bet_name": "TOTAL",
-    "bet_short_name": "TOTAL",
-    "is_main": false
-  }
-},
-{
-  "model": "tippspiel.betgroup",
-  "pk": 4,
-  "fields": {
-    "bet_name": "TOTAL",
-    "bet_short_name": "TOTAL",
-    "is_main": false
-  }
-},
-{
-  "model": "tippspiel.betgroup",
-  "pk": 5,
-  "fields": {
-    "bet_name": "TOTAL",
-    "bet_short_name": "TOTAL",
-    "is_main": false
-  }
-},
-{
-  "model": "tippspiel.betgroup",
-  "pk": 6,
-  "fields": {
-    "bet_name": "TOTAL",
-    "bet_short_name": "TOTAL",
-    "is_main": false
-  }
-},
-{
-  "model": "tippspiel.betgroup",
-  "pk": 7,
-  "fields": {
-    "bet_name": "TOTAL",
-    "bet_short_name": "TOTAL",
-    "is_main": false
-  }
-},
-{
-  "model": "tippspiel.betgroup",
-  "pk": 8,
-  "fields": {
-    "bet_name": "TOTAL",
-    "bet_short_name": "TOTAL",
+    "bet_name": "Double Chance",
+    "bet_short_name": "Double Chance",
     "is_main": false
   }
 }
