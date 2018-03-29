@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django_bitcoin.models import Wallet, WalletTransaction
 from django.db import models, connection
-from django.db.models import Q, Avg
+from django.db.models import Q, Min
 from django.utils import timezone
 from bbil.models import Profile
 import decimal
@@ -174,7 +174,7 @@ class MatchBet(models.Model):
     
     def calculate(self):
         if self.is_manual ==False:
-            score = MatchBetHelper.objects.filter(matchbet=self).all().aggregate(Avg('score'))['score__avg']
+            score = MatchBetHelper.objects.filter(matchbet=self).all().aggregate(Min('score'))['score__min']
             score = round(0 if score ==None else score, 2)
             if score > 1:
                 self.score=score
