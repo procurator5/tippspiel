@@ -1,5 +1,6 @@
 import requests
 from lxml import etree
+from django.template.defaultfilters import length
 
 
 class XmlSoccer(object):
@@ -69,6 +70,8 @@ class XmlSoccer(object):
             r = requests.get(address, params=params)
             # parse the xml
             root = etree.XML(r.text.encode('utf-8'))
+
+                            
             if len(root) == 0:
                 raise(Exception(root.text))
             for child in list(root):
@@ -80,3 +83,45 @@ class XmlSoccer(object):
             print( str(e) )
         # return the results
         return data
+
+    def GetAllOddsByFixtureMatchId(self, *args, **kwargs):
+        """ Call the XMLSoccer API
+
+        :param method: XMLSoccer function, e.g 'GetHistoricMatchesByLeagueAndSeason'
+        :param args: E.g league, seasonString etc
+        :param kwargs: .g league, seasonString etc
+        :return: output from xmlsoccer as list of dicts
+        :raise (Exception('Error: Method not passed to get_xmlsoccer')):
+        """
+        
+        
+        if not self.demo:
+            address = self.service_address + "GetAllOddsByFixtureMatchId"
+        else:
+            address = self.demo_address + "GetAllOddsByFixtureMatchId"
+        # create the request parameters
+        params = dict()
+        params['ApiKey'] = self.api_key
+        for kwarg in kwargs:
+            params[kwarg] = kwargs[kwarg]
+        # list to store the data in
+        data = []
+        try:
+            # make the request
+            r = requests.get(address, params=params)
+            # parse the xml
+            root = etree.XML(r.text.encode('utf-8'))
+
+                            
+            if len(root) == 0:
+                raise(Exception(root.text))
+            for child in root.iter('Odds'):
+                tmp = dict()
+                for element in list(child):
+                    tmp[element.tag] = element.text
+                data.append(tmp)
+        except Exception as e:
+            print( str(e) )
+        # return the results
+        return data
+
