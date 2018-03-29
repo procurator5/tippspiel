@@ -56,9 +56,9 @@ class Loader_Xmlsoccer():
                 
                     if match['Time'] == 'Finished':
                         if row.finished == False:
+                            row.finished = True
                             closed = row.closeMatch()
                             if closed:
-                                row.finished = True
                                 row.save()
                 except KeyError:
                     pass
