@@ -126,7 +126,7 @@ class Match(models.Model):
         return MatchBet.objects.filter(match = self).filter(bet__in = bets).order_by('bet__order').all()
     
     def getAllBets(self):
-        return MatchBet.objects.filter(match=self).filter(models.Q(bet__bet_group__is_main = True) | models.Q(is_enabled=True)).order_by("id").all()
+        return MatchBet.objects.filter(match=self).filter(models.Q(bet__bet_group__is_main = True) | models.Q(is_enabled=True)).order_by("bet__id").all()
     
     def total_balance(self):
         return self.wallet.total_balance()
