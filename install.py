@@ -4,10 +4,8 @@ from tippspiel.xmlsoccer import XmlSoccer
 
 from tippspiel.models import League, Team, Match, MatchBet, MatchBetHelper
 from django.utils import timezone
-from django.db.models import Min
 from datetime import timedelta
 import bet.settings
-from numpy.lib.npyio import save
 
 class Loader_Xmlsoccer():
     def __init__(self, api_key, use_demo=True):
@@ -99,13 +97,16 @@ class Loader_Xmlsoccer():
         for odd in odds:
             print(odd)
             for bet in MatchBet.objects.filter(match = match, bet__bet_group__bet_name = odd['Type']).all():
-                bethelper = MatchBetHelper()
-                bethelper.bookmaker = odd["Bookmaker"]
-                bethelper.updated=odd['UpdatedDate']
-                bethelper.score = float(odd[bet.bet.xmlsoccer_tagname])
-                bethelper.matchbet=bet
-                bethelper.save()
-                saved=True  
+                try:
+                    bethelper = MatchBetHelper()
+                    bethelper.bookmaker = odd["Bookmaker"]
+                    bethelper.updated=odd['UpdatedDate']
+                    bethelper.score = float(odd[bet.bet.xmlsoccer_tagname])
+                    bethelper.matchbet=bet
+                    bethelper.save()
+                    saved=True
+                except KeyError:
+                    pass
         if saved:
             MatchBet.objects.filter(match=match).update(update=timezone.now())
 
