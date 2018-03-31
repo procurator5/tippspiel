@@ -5,6 +5,7 @@ from django.db.models import Q, Min
 from django.utils import timezone
 from bbil.models import Profile
 import decimal
+import re
 
 from datetime import timedelta
 
@@ -79,19 +80,17 @@ class Match(models.Model):
     wallet = models.ForeignKey("django_bitcoin.Wallet", on_delete=models.DO_NOTHING)
     xmlsoccer_matchid = models.IntegerField()
     finished = models.BooleanField(default=False)
-    started = models.BooleanField(default=True)
+    updated = models.DateTimeField(default=timezone.now)
+    timeinfo = models.TextField(null=True)
 
     def has_started(self):
         return self.date <= timezone.now()
-    
-    def minutes(self):
-        if self.has_started():
-            return (timezone.now() - self.date).seconds//60
-        return 0
         
     def times(self):
-        if self.has_started():
-            return self.minutes()//45 +1
+        minutes = re.match('(\d+)', self.timeinfo)
+        if minutes:
+            minutes = minutes.group(0)
+            return int(minutes)//45 +1
         return "NoN"
     
     def __str__(self):

@@ -52,6 +52,7 @@ class Loader_Xmlsoccer():
                 try:
                     row.score_home = match['HomeGoals']
                     row.score_visitor = match['AwayGoals']
+                    row.timeinfo = match['Time']
                 
                     if match['Time'] == 'Finished':
                         if row.finished == False:
