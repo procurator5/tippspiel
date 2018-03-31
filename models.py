@@ -87,11 +87,13 @@ class Match(models.Model):
         return self.date <= timezone.now()
         
     def times(self):
-        minutes = re.match('(\d+)', self.timeinfo)
-        if minutes:
-            minutes = minutes.group(0)
-            return int(minutes)//45 +1
-        return "NoN"
+        try:
+            minutes = re.match('(\d+)', self.timeinfo)
+            if minutes:
+                minutes = minutes.group(0)
+                return int(minutes)//45 +1
+        except Exception:
+            return "NoN"
     
     def __str__(self):
         return '%s %d:%d %s' % (self.team_home.handle, self.score_home, self.score_visitor, self.team_visitor.handle)
