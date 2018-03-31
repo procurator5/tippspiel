@@ -8,8 +8,10 @@
   				<span class="score">{{ match.score_home }} : {{ match.score_visitor }}</span>   
   				<span class="ico-holder scoreTime">
   					<span>{{match.timeinfo}}</span>
-  				</span>   
+  				</span>  
+  				{% if match.times %}
   				<span class="eventStatusScore">- {{match.times}}-й тайм</span>   
+  				{% endif %}
   			</div> 
   			<div class="sportTextHolder">  
   				<div> 

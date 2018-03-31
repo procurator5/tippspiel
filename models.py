@@ -93,7 +93,7 @@ class Match(models.Model):
                 minutes = minutes.group(0)
                 return int(minutes)//45 +1
         except Exception:
-            return "NoN"
+            return None
     
     def __str__(self):
         return '%s %d:%d %s' % (self.team_home.handle, self.score_home, self.score_visitor, self.team_visitor.handle)
