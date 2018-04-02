@@ -42,12 +42,6 @@ urlpatterns = [
     ),
 
     url(
-        r'^betsHistory/$',
-        bets_history,
-        name="bets_history"
-    ),
-
-    url(
         r'^betSell/(?P<bet_id>\d+)/$',
         bet_sell,
         name="bet_sell"

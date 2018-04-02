@@ -151,14 +151,3 @@ def match_detail(request, match_id):
             'matchbets': match.getAllBets(),
         },
     )
-
-@login_required
-def bets_history(request):
-    return render(
-        request,
-        'tippspiel/bets_history.html',
-        {
-            'tipps': Tipp.objects.filter(player=request.user).all()
-        },
-    )
-    
