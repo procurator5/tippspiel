@@ -136,7 +136,7 @@ def bet_form(request, bet_id):
             'match': match,
             'tipps': tipps,
             'tip': match_bet,
-            'matchbets': MatchBet.objects.filter(match=match).all()
+            'matchbets': match.getAllBets()
         },
     )
 
