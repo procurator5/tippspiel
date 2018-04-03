@@ -7318,6 +7318,22 @@ li.more>.chevron:after {
 	background: #46b102
 }
 
+.profileBetList li.history24 .los .ico-holder:before,
+.profileBetList li.history24 .los .livedealer-tables .livedealer-table__seats span:before,
+.livedealer-tables .livedealer-table__seats .profileBetList li.history24 .los span:before,
+.profileBetList li.history24 .los .livedealer-tables .ezugi-table__seats span:before,
+.livedealer-tables .ezugi-table__seats .profileBetList li.history24 .los span:before,
+.profileBetList li.history24 .los .menu.menu-horizontal[data-menu-id*="games"] div.menu-inner .tabs-nav .tabs-nav__itm:before,
+.menu.menu-horizontal[data-menu-id*="games"] div.menu-inner .tabs-nav .profileBetList li.history24 .los .tabs-nav__itm:before,
+.profileBetList li.history24 .los .wallets-list__item-check:before,
+.profileBetList li.history24 .los .is-error .wallets-list__item-error:before,
+.is-error .profileBetList li.history24 .los .wallets-list__item-error:before,
+.profileBetList li.history24 .los .is-successful .wallets-list__item-success:before,
+.is-successful .profileBetList li.history24 .los .wallets-list__item-success:before {
+	background: #a40000
+}
+
+
 .profileBetList li.history20 .ico-holder:before,
 .profileBetList li.history20 .livedealer-tables .livedealer-table__seats span:before,
 .livedealer-tables .livedealer-table__seats .profileBetList li.history20 span:before,
