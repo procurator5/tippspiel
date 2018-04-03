@@ -2,14 +2,12 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_protect
-from django.utils import timezone
 
 from tippspiel.models import Match, Tipp, League, MatchBet
-from bbil.models import Profile
+from tippspiel.forms import SearchForm
 
 from django import template
 import decimal
-from bbil.views import profile
 
 
 register = template.Library()
@@ -36,6 +34,20 @@ def overview(request):
         },
     )
 
+def search(request):
+    matches = None
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            q = form.cleaned_data['quote']
+            matches = Match.objects.search(q)
+    return render(
+        request,
+        'tippspiel/search.html',
+        {
+            'matches': matches,
+        },
+    )
 
 @login_required
 @csrf_protect

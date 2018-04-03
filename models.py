@@ -7,6 +7,11 @@ from bbil.models import Profile
 import decimal
 import re
 
+#full-text search 
+from djorm_pgfulltext.models import SearchManager
+from djorm_pgfulltext.fields import VectorField
+
+
 from datetime import timedelta
 
 class League(models.Model):
@@ -73,6 +78,16 @@ class Match(models.Model):
     finished = models.BooleanField(default=False)
     updated = models.DateTimeField(default=timezone.now)
     timeinfo = models.TextField(null=True)
+
+    #full text search
+    search_index = VectorField()
+    
+    objects = SearchManager(
+        fields=('league', 'team_home', 'team_visitor', 'location'),
+        config='pg_catalog.english',
+        search_field='search_index',
+        auto_update_search_field=True
+    )
 
     def has_started(self):
         return self.date <= timezone.now()

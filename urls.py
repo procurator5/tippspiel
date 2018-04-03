@@ -24,6 +24,12 @@ urlpatterns = [
     ),
 
     url(
+        r'^search/$',
+        search,
+        name="search"
+    ),
+
+    url(
         r'^bet/(?P<bet_id>\d+)/$',
         bet_info,
         name="tippspiel_bet_info"
