@@ -62,7 +62,11 @@
                      <tr>
 					{% for bid in group.list %}  
                         <td class="">
+                        {%if user.is_authenticated %}
                            <a id="140552461_214365_0" href="{% url 'tippspiel_bet_form' bid.id %}">
+                        {% else %}
+                           <a id="140552461_214365_0" href="{% url 'signup' %}">                        
+                        {% endif %}
                               <div>{{bid.bet.bet_choice}}</div>
                               <div class="oddHolder" id="odds_228604162_0_1">{{bid.score}}</div>
                            </a>
