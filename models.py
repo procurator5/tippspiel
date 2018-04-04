@@ -78,12 +78,13 @@ class Match(models.Model):
     finished = models.BooleanField(default=False)
     updated = models.DateTimeField(default=timezone.now)
     timeinfo = models.TextField(null=True)
+    content = models.TextField(null = True)
 
     #full text search
     search_index = VectorField()
     
     objects = SearchManager(
-        fields=('league', 'team_home', 'team_visitor', 'location'),
+        fields=('content',),
         config='pg_catalog.english',
         search_field='search_index',
         auto_update_search_field=True
@@ -102,12 +103,12 @@ class Match(models.Model):
             return None
     
     def __str__(self):
-        return '%s %d:%d %s' % (self.team_home.handle, self.score_home, self.score_visitor, self.team_visitor.handle)
+        return '%s %s %s (%s %s)' % (self.date, self.team_home.name, self.team_visitor.name, self.league.country, self.league.league_name)
     
     # this is not needed if small_image is created at set_image
     def save(self, *args, **kwargs):
         self.wallet, created = Wallet.objects.get_or_create(label=self.team_home.name+"-"+self.team_visitor.name)
-        recv_address = self.wallet.receiving_address(fresh_addr=False)
+        self.content = self.__str__()
         super(Match, self).save(*args, **kwargs)
         # I write bets coefficients in table 
         if MatchBet.objects.filter(match=self).count()== 0:
@@ -226,12 +227,12 @@ class Tipp(models.Model):
                 bank_wallet.send_to_wallet(self.match.wallet, bitcoin_amount - self.match.wallet.total_balance())
                 
             player = Profile.objects.get(user = self.player)    
-            self.match.wallet.send_to_wallet(player.wallet, bitcoin_amount)
+            transaction=self.match.wallet.send_to_wallet(player.wallet, bitcoin_amount)
             self.state="Win"
         else:
             bitcoin_amount = round(self.match.wallet.total_balance() if self.amount > self.match.wallet.total_balance() else self.amount, 8)
             if bitcoin_amount > 0: 
-                self.match.wallet.send_to_wallet(bank_wallet, bitcoin_amount)
+                transaction = self.match.wallet.send_to_wallet(bank_wallet, bitcoin_amount)
                     
             self.state="Lose"
 
