@@ -12,6 +12,7 @@
       <div class="slider"></div>
       <div id="content">
          <div class="view visible" id="searchView">
+         	<div id="sportlineSearch" class="ico-holder"> 
                <form method='POST' action="{% url 'search' %}">
                		<input id="searchInput" name="quote" class="autocomplete mglass" type="text" placeholder="Поиск" autocomplete="off" aria-autocomplete="list" maxlength="256">
 					{% csrf_token %}
@@ -26,12 +27,12 @@
                {% else %}
                <ul id="searchResults" style="">
                {% for match in matches %}
-                  <li class="preMatch">
+                  <li class="preMatch" onclick="return location.href = '{% url 'tippspiel_match_detail' match.id %}'">
                      <div class="scoreHolder">
-                        <div class="date">{{match.date|date:'D/M'}}</div>
+                        <div class="date">{{match.date|date:'d/M'}}</div>
                         <div class="time">{{match.date|date:'H:i'}}</div>
                      </div>
-                     <div class="title">{{match.home_team}} - {{match.visitor_team}}</div>
+                     <div class="title">{{match.team_home.name}} - {{match.team_visitor.name}}</div>
                      <div class="league">{{ match.league.country }} - {{ match.league.league_name }}</div>
                   </li>
                   {% endfor %}

@@ -14848,7 +14848,7 @@ body[data-view="help"] .content-wrapper {
 
 div#sportlineSearch {
 	position: relative;
-	height: calc(100vh - 105px)
+	height: calc(100vh - 105px);
 }
 
 div#sportlineSearch:before {
@@ -14860,7 +14860,7 @@ div#sportlineSearch:before {
 	left: 1px
 }
 
-div#sportlineSearch>input {
+div#sportlineSearch>form>input {
 	display: block;
 	font-size: 16px;
 	color: #fff;
@@ -14870,13 +14870,15 @@ div#sportlineSearch>input {
 	padding-left: 40px;
 	margin: 0;
 	background-color: #1f2228
+	
 }
 
 div#sportlineSearch>input.loading {
 	background-image: url("../../img/leon/loading.gif");
 	background-position: 7px 7px;
 	background-repeat: no-repeat;
-	padding-left: 30px
+	padding-left: 30px;
+	padding-left: 40px;
 }
 
 div#sportlineSearch>ul#searchResults {
