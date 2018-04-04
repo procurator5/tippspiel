@@ -1,6 +1,6 @@
 # coding=utf-8
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.csrf import csrf_protect
 
 from tippspiel.models import Match, Tipp, League, MatchBet
@@ -52,15 +52,15 @@ def search(request):
 @login_required
 @csrf_protect
 def bet_save(request):
-
     try:
-
         if request.method != 'POST':
             raise Exception("Error getting parameters. Go back to the options page and try again")
         
         betId = int(request.POST.get("betId"))
         betCount = decimal.Decimal(request.POST.get("betCount"))            
-        bet = MatchBet.objects.get(pk=betId)       
+        bet = MatchBet.objects.get(pk=betId)  
+        if bet.match.finished == True:
+            raise Exception("Match has finished")     
         Tipp.create(request.user, bet, betCount)
 
         return render(
@@ -139,6 +139,9 @@ def bet_info(request, bet_id):
 def bet_form(request, bet_id):
     match_bet = get_object_or_404(MatchBet, pk=bet_id)
     match = match_bet.match
+    if match.finished==True:
+        return redirect('account_activation_sent')
+
     tipps = MatchBet.objects.filter(match=match).order_by('bet__bet_group')
     
     return render(
