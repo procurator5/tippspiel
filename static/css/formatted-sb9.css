@@ -585,6 +585,7 @@ input[type="text"],
 input[type="tel"],
 input[type="password"],
 input[type="email"],
+select,
 .inputDiv,
 .amount_conv {
 	display: block;
