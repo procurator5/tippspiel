@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django_bitcoin.models import Wallet, WalletTransaction
+from django_bitcoin import  currency
 from django.db import models, connection
 from django.db.models import Q, Min
 from django.utils import timezone
@@ -272,6 +273,7 @@ class Tipp(models.Model):
         
     @staticmethod
     def create(user, bet, amount):
+        amount = currency.currency2btc(amount, user.profile.currency)
         if amount > bet.min_value and amount<bet.max_value:
             # Make transaction
             profile = Profile.objects.get(user=user)

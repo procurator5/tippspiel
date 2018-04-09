@@ -1,6 +1,7 @@
 {% extends "tippspiel/match_detail.html" %}
 {% load i18n dicthelpers %}
 {% block bets %}
+{% load currency_conversions %}
 <div id="slipBox" class="">
    <div id="slipTitle">
       <span id="deleteSlip" class="ico-holder"></span>  
@@ -26,7 +27,7 @@
             <li> Макс. выигрыш: <span class="right" id="slipMaxWin">0</span> </li>
          </ul>
          <div class="bLiveUpdateSlip  hidden"> <input type="checkbox" id="liveUpdateSlipCheckbox" name="liveUpdateSlip"> <label class="cb-label" for="liveUpdateSlipCheckbox"></label> <label for="liveUpdateSlipCheckbox">Автоматически обновлять коэффициенты.</label> <em class="liveUpdateDetails">Подробнее</em> </div>
-         <p class="info"> Ставка от <span id="slipMinStake">{{tip.min_value}} BTC</span> до <span id="slipMaxStake">{{tip.max_value}} BTC</span> </p>
+         <p class="info"> Ставка от <span id="slipMinStake">{{tip.min_value | btc2currency:user.profile.currency}} {{user.profile.currency}}</span> до <span id="slipMaxStake">{{tip.max_value| btc2currency:user.profile.currency}} {{user.profile.currency}}</span> </p>
       </div>
       <form method="post" action="{% url 'tippspiel_bet_result' %}">
          {% csrf_token %}
@@ -65,7 +66,7 @@
          <ul class="list">
             <li id="w_376108618545198" class="slip-bet-element">
                <div data-id="376108618545198" class="right sell-bet-active" data-cashoutamount="8.9">
-                  <div class="right-inner">{{tipp.bet_score}}<span>@</span>{{tipp.amount}}</div>
+                  <div class="right-inner">{{tipp.bet_score}}<span>@</span>{{tipp.amount| btc2currency:user.profile.currency }}</div>
                   <div class="sell-bet-wrapper"><i class="icon-bet-sell"></i></div>
                </div>
                <div class="holder">

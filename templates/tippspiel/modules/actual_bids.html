@@ -1,4 +1,5 @@
 {% load i18n staticfiles activepage %}
+{% load currency_conversions %}
 <div id="slipBox" class="waiting">
    <div id="slipTitle" class="empty">
       <h1>В игре ({{tipps|length}})</h1>
@@ -19,7 +20,7 @@
          <ul class="list">
             <li id="w_376108618545198" class="slip-bet-element">
                <div data-id="376108618545198" class="right sell-bet-active" data-cashoutamount="8.9">
-                  <div class="right-inner">{{tipp.bet_score}}<span>@</span>{{tipp.amount}}</div>
+                  <div class="right-inner">{{tipp.bet_score}}<span>@</span>{{tipp.amount| btc2currency:currency}}</div>
                   <div class="sell-bet-wrapper" onclick="return location.href = '{% url 'bet_sell' tipp.id %}'"><i class="icon-bet-sell"></i></div>
                </div>
                <div class="holder">

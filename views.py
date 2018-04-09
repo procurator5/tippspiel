@@ -151,7 +151,8 @@ def bet_form(request, bet_id):
             'match': match,
             'tipps': tipps,
             'tip': match_bet,
-            'matchbets': match.getAllBets()
+            'matchbets': match.getAllBets(),
+            'bets': Tipp.objects.filter(player=request.user, state = 'In Game').all(),
         },
     )
 

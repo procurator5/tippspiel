@@ -9,4 +9,4 @@ def actual_bids(context):
     tipps = []
     if request.user.is_authenticated:
         tipps = Tipp.objects.filter(player=request.user, state = 'In Game').all()
-    return {'tipps': tipps}
+    return {'tipps': tipps, 'currency': request.user.profile.currency}

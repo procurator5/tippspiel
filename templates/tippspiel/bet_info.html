@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n staticfiles %}
 {% block body %}
+{% load currency_conversions %}
 <div id="wrapper">
    <div class="downtime-alert" id="downtimeAlert" style="display: none;"></div>
    <div class="menu menu-top menu-horizontal hidden" data-slider="true" data-level="2" data-menu-id="bets" style="opacity: 1;"></div>
@@ -42,15 +43,15 @@
                   <hr>
                </li>
                <li>
-                  <span>Сумма ставки:</span> <span>{{tip.amount}} BTC</span>
+                  <span>Сумма ставки:</span> <span>{{tip.amount  | btc2currency:user.profile.currency}} {{ user.profile.currency }}</span>
                   <hr>
                </li>
                <li>
-                  <span>Макс. выигрыш :</span> <span>{{prize|floatformat:8}} BTC</span>
+                  <span>Макс. выигрыш :</span> <span>{{prize | btc2currency:user.profile.currency}} {{ user.profile.currency }}</span>
                   <hr>
                </li>
                <li id="cashoutBlock">
-                  <span>Продажа ставки:</span> <span id="cashoutAmount"> <b>{{cancel|floatformat:8}} BTC</b>  <a id="cashoutBtn" class="button" style="opacity:1;" onclick="return location.href = '{% url 'bet_sell' tip.id %}'">Продать</a>  </span> 
+                  <span>Продажа ставки:</span> <span id="cashoutAmount"> <b>{{cancel| btc2currency:user.profile.currency}} {{ user.profile.currency }}</b>  <a id="cashoutBtn" class="button" style="opacity:1;" onclick="return location.href = '{% url 'bet_sell' tip.id %}'">Продать</a>  </span> 
                   <hr>
                </li>
             </ul>
