@@ -1,4 +1,6 @@
 {% load i18n staticfiles %}
+{% load tz %}
+{% timezone user.profile.timezone %}
             
             		<li class="groupedListSubItem first" id="ma{{match.id}}" onclick="return location.href = '{% url 'tippspiel_match_detail' match.id %}'">  
             			<div class="sportItemContainer">  
@@ -28,4 +30,4 @@
             					</ul>  
             				</div>  
             			</li>
-             								
+{% endtimezone %}             								

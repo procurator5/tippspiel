@@ -27,7 +27,8 @@
 				</div> 
 			</div>
 		</div>
-
+{% load tz %}
+{% timezone user.profile.timezone %}
 <div id="content-wrap">
    <div id="content">
       <div class="view visible" id="eventDetailsView">
@@ -52,6 +53,7 @@
                </tbody>
             </table>
          </div>
+{% endtimezone %}         
          {% regroup matchbets by bet.bet_group as groups %}
          <ul id="betList" class="betList">
          	{% for group in groups %}

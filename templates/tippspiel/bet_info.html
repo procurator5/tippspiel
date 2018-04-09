@@ -2,6 +2,9 @@
 {% load i18n staticfiles %}
 {% block body %}
 {% load currency_conversions %}
+
+{% load tz %}
+{% timezone user.profile.timezone %}       
 <div id="wrapper">
    <div class="downtime-alert" id="downtimeAlert" style="display: none;"></div>
    <div class="menu menu-top menu-horizontal hidden" data-slider="true" data-level="2" data-menu-id="bets" style="opacity: 1;"></div>
@@ -60,4 +63,5 @@
       </div>
    </div>
 </div>
+{% endtimezone %}
 {% endblock %}
