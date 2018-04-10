@@ -1,12 +1,17 @@
 {% load i18n staticfiles %}
 {% load tz %}
-{% timezone user.profile.timezone %}
-            
+
             		<li class="groupedListSubItem first" id="ma{{match.id}}" onclick="return location.href = '{% url 'tippspiel_match_detail' match.id %}'">  
             			<div class="sportItemContainer">  
             				<div class="sport-title "> 
-            					<div class="sportTextHolder">  
+            					<div class="sportTextHolder">
+            					{% if user.is_authentificated %}
+									{% timezone user.profile.timezone  %}
             						<div class="timeKickOff">{{match.date|date:'H:i'}}</div> 
+									{% endtimezone %}
+								{% else %}
+            						<div class="timeKickOff">{{match.date|date:'H:i'}}</div> 
+								{% endif %}								             								
             						<div class="eventPlusDesc"> 
             							<h1>{{ match.team_home.name }} - {{ match.team_visitor.name }}</h1> 
             							<p class="event-desc event-desc-no-padding">{{ match.league.country }} - {{ match.league.league_name }}</p> 
@@ -30,4 +35,3 @@
             					</ul>  
             				</div>  
             			</li>
-{% endtimezone %}             								
