@@ -5,7 +5,7 @@
 <div id="slipBox" class="">
    <div id="slipTitle">
       <span id="deleteSlip" class="ico-holder"></span>  
-      <h1>Одиночная ставка</h1>
+      <h1>{%trans "Single bet" %}</h1>
       <span id="slipClose" class="ico-holder slipClose"></span> 
    </div>
    <div id="slipHolder">
@@ -24,10 +24,12 @@
             </li>
          </ul>
          <ul class="list betDetails">
-            <li> Макс. выигрыш: <span class="right" id="slipMaxWin">0</span> </li>
+            <li> {%trans "Win" %}: <span class="right" id="slipMaxWin">0</span> </li>
          </ul>
-         <div class="bLiveUpdateSlip  hidden"> <input type="checkbox" id="liveUpdateSlipCheckbox" name="liveUpdateSlip"> <label class="cb-label" for="liveUpdateSlipCheckbox"></label> <label for="liveUpdateSlipCheckbox">Автоматически обновлять коэффициенты.</label> <em class="liveUpdateDetails">Подробнее</em> </div>
-         <p class="info"> Ставка от <span id="slipMinStake">{{tip.min_value | btc2currency:user.profile.currency}} {{user.profile.currency}}</span> до <span id="slipMaxStake">{{tip.max_value| btc2currency:user.profile.currency}} {{user.profile.currency}}</span> </p>
+         <div class="bLiveUpdateSlip  hidden"> <input type="checkbox" id="liveUpdateSlipCheckbox" name="liveUpdateSlip"> <label class="cb-label" for="liveUpdateSlipCheckbox"></label>
+          <label for="liveUpdateSlipCheckbox">{%trans "Automatically update the coefficients." %} </label> <em class="liveUpdateDetails">{%trans "More" %}</em> </div>
+         <p class="info"> {%trans "Bet from" %} <span id="slipMinStake">{{tip.min_value | btc2currency:user.profile.currency}} {{user.profile.currency}}</span> {%trans "to" %} 
+         <span id="slipMaxStake">{{tip.max_value| btc2currency:user.profile.currency}} {{user.profile.currency}}</span> </p>
       </div>
       <form method="post" action="{% url 'tippspiel_bet_result' %}">
          {% csrf_token %}
@@ -58,7 +60,7 @@
 </div>
 
 <div class="waitingBets">
-   <h1 class="">Неразыгранные ставки</h1>
+   <h1 class="">{%trans "Unreplayed bets" %}</h1>
    <ul id="Z_1" class="">
    {% for tipp in bets %}
       <li class="groupedListItem">

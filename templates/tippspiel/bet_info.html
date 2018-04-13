@@ -4,7 +4,8 @@
 {% load currency_conversions %}
 
 {% load tz %}
-{% timezone user.profile.timezone %}       
+{% timezone user.profile.timezone %}
+{% trans "Soccer" as soccer %}       
 <div id="wrapper">
    <div class="downtime-alert" id="downtimeAlert" style="display: none;"></div>
    <div class="menu menu-top menu-horizontal hidden" data-slider="true" data-level="2" data-menu-id="bets" style="opacity: 1;"></div>
@@ -17,48 +18,48 @@
       <div class="slider"></div>
       <div id="content">
          <div class="view visible" id="betDetailsView">
-            <h1 class="title"><span></span>Подробности ставки</h1>
+            <h1 class="title"><span></span>{%trans "Bet details" %}</h1>
             <div id="eventInfo">
-               <span class="info">Футбол - {{tip.match.team_home.country}} - {{tip.match.league.league_name}}</span> 
+               <span class="info">{{soccer}} - {{tip.match.team_home.country}} - {{tip.match.league.league_name}}</span> 
                <div class="details">  <span class="dataTime">{{tip.match.date.date}}&nbsp;{{tip.match.date|date:'H:i'}}</span>   </div>
                <h1>{{tip.match.team_home.name}} - {{tip.match.team_visitor.name}}</h1>
-               <div class="betNumber">Ставка:&nbsp;{{tip.id}}</div>
+               <div class="betNumber">{%trans "Bet" %}:&nbsp;{{tip.id}}</div>
             </div>
             <ul id="detailsList" class="list">
                <li>
-                  <span>Принята:</span> <span>{{tip.date.date}}&nbsp;{{tip.date|date:'H:i'}}</span>
+                  <span>{%trans "Accepted" %}:</span> <span>{{tip.date.date}}&nbsp;{{tip.date|date:'H:i'}}</span>
                   <hr>
                </li>
                <li>
-                  <span>Статус:</span> <span class="inGame">{{tip.state}}</span>
+                  <span>{%trans "State" %}:</span> <span class="inGame">{{tip.state}}</span>
                   <hr>
                </li>
                <li>
-                  <span>Тип ставки:</span> <span>  {{tip.bet.bet_group.bet_name}}  </span>
+                  <span>{%trans "Bet type" %}:</span> <span>  {{tip.bet.bet_group.bet_name}}  </span>
                   <hr>
                </li>
                <li>
-                  <span>Выбор:</span> <span>{{tip.bet.bet_choice}}</span>
+                  <span>{%trans "Choice" %}:</span> <span>{{tip.bet.bet_choice}}</span>
                   <hr>
                </li>
                <li>
-                  <span>Коэффициент:</span> <span>{{tip.bet_score}}</span>
+                  <span>{%trans "Rate" %}:</span> <span>{{tip.bet_score}}</span>
                   <hr>
                </li>
                <li>
-                  <span>Сумма ставки:</span> <span>{{tip.amount  | btc2currency:user.profile.currency}} {{ user.profile.currency }}</span>
+                  <span>{%trans "Bet amount" %}:</span> <span>{{tip.amount  | btc2currency:user.profile.currency}} {{ user.profile.currency }}</span>
                   <hr>
                </li>
                <li>
-                  <span>Макс. выигрыш :</span> <span>{{prize | btc2currency:user.profile.currency}} {{ user.profile.currency }}</span>
+                  <span>{%trans "Win amount" %}:</span> <span>{{prize | btc2currency:user.profile.currency}} {{ user.profile.currency }}</span>
                   <hr>
                </li>
                <li id="cashoutBlock">
-                  <span>Продажа ставки:</span> <span id="cashoutAmount"> <b>{{cancel| btc2currency:user.profile.currency}} {{ user.profile.currency }}</b>  <a id="cashoutBtn" class="button" style="opacity:1;" onclick="return location.href = '{% url 'bet_sell' tip.id %}'">Продать</a>  </span> 
+                  <span>{%trans "Selling amount" %}:</span> <span id="cashoutAmount"> <b>{{cancel| btc2currency:user.profile.currency}} {{ user.profile.currency }}</b>  <a id="cashoutBtn" class="button" style="opacity:1;" onclick="return location.href = '{% url 'bet_sell' tip.id %}'">{%trans "Sell" %}</a>  </span> 
                   <hr>
                </li>
             </ul>
-            <p class="hint">Расчет ставок осуществляется через 20 минут после фактического окончания события, но не позднее 24 часов в случае форс-мажорных обстоятельств.</p>
+            <p class="hint">{%trans "The bets are calculated 20 minutes after the actual end of the event, but not later than 24 hours in case of force majeure." %}</p>
          </div>
       </div>
    </div>

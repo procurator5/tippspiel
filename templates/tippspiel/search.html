@@ -20,9 +20,11 @@
                <div id="btn-clear" class="td btn ico-holder" style=""></div>
                {% if matches == None %}
                <div id="searchHelp">
-                  <p>Введите в поле для поиска название события, лиги или вида спорта, например:</p>
-                  <h4>лига чемпионов</h4>
-                  <h4>спартак</h4>
+            {% blocktrans %}               
+					<p> Enter the name of the event, league or sport in the search field, for example: </ p>
+                   <h4> Champions League </ h4>
+                   <h4> Chelsea </ h4>
+            {% endblocktrans %}               
                </div>
                {% else %}
                <ul id="searchResults" style="">

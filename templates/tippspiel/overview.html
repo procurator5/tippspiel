@@ -15,30 +15,9 @@
 </div>
 {% endif %}
 
-    <div id="wrapper">
-    	<!-- Links Live/Top/All -->
-		<div class="menu menu-top menu-horizontal" data-slider="true" data-level="2" data-menu-id="bets" style="opacity: 1;">
-			<div class="menu-inner position-fixed"> 
-				<div class="tab-list tab-list-current" data-count="2">  
-					<ul>  
-						<li data-id="preMatchEvents" class="tab item-preMatchEvents is-inactive"> 
-						<a href="/" class="tabs-nav__itm tabs-nav__itm--next active"> 
-							<div class="tab-inner"> 
-								<span class="ico-holder"></span> 
-								<div class="text">Топ матчи</div> 
-							</div> 
-							</a>
-						</li>  
-						<li data-id="sports" class="tab item-sports active"> 
-							<div class="tab-inner"> 
-								<span class="ico-holder"></span> 
-								<div class="text">Лиги</div> 
-							</div> 
-						</li>  
-					</ul>  
-				</div> 
-			</div>
-		</div>
+<div id="wrapper">
+
+{% include "tippspiel/horisontal_menu.html" %}
 
 <div class="view visible" id="sportsLeaguesEventsView">
   {% for league in league_list %}

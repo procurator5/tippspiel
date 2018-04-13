@@ -1,32 +1,11 @@
 {% extends "base.html" %}
 {% load i18n staticfiles %}
+{% trans "Soccer" as soccer %}
+
 {% block body %}
     <div id="wrapper">
-    	<!-- Links Live/Top/All -->
-		<div class="menu menu-top menu-horizontal" data-slider="true" data-level="2" data-menu-id="bets" style="opacity: 1;">
-			<div class="menu-inner position-fixed"> 
-				<div class="tab-list tab-list-current" data-count="2">  
-					<ul>  
-						<li data-id="preMatchEvents" class="tab item-preMatchEvents is-inactive"> 
-						<a href="/" class="tabs-nav__itm tabs-nav__itm--next active"> 
-							<div class="tab-inner"> 
-								<span class="ico-holder"></span> 
-								<div class="text">Топ матчи</div> 
-							</div> 
-							</a>
-						</li>  
-						<li data-id="sports" class="tab item-sports is-inactive"> 
-						<a href="/" class="tabs-nav__itm tabs-nav__itm--next is-inactive"> 
-							<div class="tab-inner"> 
-								<span class="ico-holder"></span> 
-								<div class="text">Лиги</div> 
-							</div> 
-							</a>
-						</li>  
-					</ul>  
-				</div> 
-			</div>
-		</div>
+	{% include "tippspiel/horisontal_menu.html" %}
+
 {% load tz %}
 <div id="content-wrap">
    <div id="content">
@@ -35,10 +14,10 @@
          <div id="aboutEvent">
 			{% if user.is_authentificated %}
 			{% timezone user.profile.timezone  %}
-            <div class="eventLeague">  <span class="date">{{match.date.date}}&nbsp;{{match.date|date:'H:i'}}</span> <span class="preInfo prematch">Футбол - {{match.league.league_name}}</span>  </div>
+            <div class="eventLeague">  <span class="date">{{match.date.date}}&nbsp;{{match.date|date:'H:i'}}</span> <span class="preInfo prematch">{{soccer}} - {{match.league.league_name}}</span>  </div>
 			{% endtimezone %}         
 			{% else %}
-            <div class="eventLeague">  <span class="date">{{match.date.date}}&nbsp;{{match.date|date:'H:i'}}</span> <span class="preInfo prematch">Футбол - {{match.league.league_name}}</span>  </div>
+            <div class="eventLeague">  <span class="date">{{match.date.date}}&nbsp;{{match.date|date:'H:i'}}</span> <span class="preInfo prematch">{{soccer}} - {{match.league.league_name}}</span>  </div>
 			{%endif%}			
             <table class="prematchEvent">
                <tbody>

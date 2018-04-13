@@ -1,0 +1,24 @@
+{% load i18n staticfiles %}
+{% url 'tippspiel_match_list' as top %}
+{% url 'tippspiel_overview' as tour %}
+ <!-- Links Live/Top/All  is-inactive -->
+		<div class="menu menu-top menu-horizontal" data-slider="true" data-level="2" data-menu-id="bets" style="opacity: 1;">
+			<div class="menu-inner position-fixed"> 
+				<div class="tab-list tab-list-current" data-count="2">  
+					<ul>  
+						<li data-id="preMatchEvents" class="tab item-preMatchEvents {% if request.get_full_path == top %}active{% endif %}"> 
+							<div class="tab-inner" onclick="return location.href = '{{top}}'"> 
+								<span class="ico-holder"></span> 
+								<div class="text">{%trans "Top matches" %}</div> 
+							</div> 
+						</li>  
+						<li data-id="sports" class="tab item-sports {% if request.get_full_path == tour %}active{% endif %}"> 
+							<div class="tab-inner" onclick="return location.href = '{{tour}}'"> 
+								<span class="ico-holder"></span> 
+								<div class="text">{%trans "Tournaments" %}</div> 
+							</div> 
+						</li>  
+					</ul>  
+				</div> 
+			</div>
+		</div>
