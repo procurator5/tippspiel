@@ -2,17 +2,19 @@
 {% load currency_conversions %}
 <div id="slipBox" class="waiting">
    <div id="slipTitle" class="empty">
-      <h1>В игре ({{tipps|length}})</h1>
+      <h1>{% trans 'In Game' %} ({{tipps|length}})</h1>
       <span id="slipClose" class="slipClose ico-holder"></span> 
    </div>
    <div id="slipHolder">
       <div id="slipData">
-         <p><b>Ставки не выбраны.</b> Чтобы выбрать ставку, кликните соответствующий коэффициент.</p>
+            {% blocktrans %}
+               <p><b>No bids were selected. </b> To select a bet, click the appropriate odds.</p>
+            {% endblocktrans %}
       </div>
    </div>
 </div>
 <div class="waitingBets">
-   <h1 class="">Неразыгранные ставки</h1>
+   <h1 class="">{% trans 'Unreplayed bets' %}</h1>
    <ul id="Z_1" class="">
    {% for tipp in tipps %}
       <li class="groupedListItem" onclick="return location.href = '{% url 'tippspiel_bet_info' tipp.id %}'">
