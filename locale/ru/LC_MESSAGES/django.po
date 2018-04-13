@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-12 15:07+0000\n"
+"POT-Creation-Date: 2018-04-13 12:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,10 +20,138 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: tippspiel/templates/tippspiel/password_change.html:6
-msgid "Change password"
-msgstr ""
+#: tippspiel/templates/tippspiel/bet_form.html:8
+msgid "Single bet"
+msgstr "Одиночная ставка"
 
-#: tippspiel/templates/tippspiel/password_change.html:27
-msgid "Save"
+#: tippspiel/templates/tippspiel/bet_form.html:27
+msgid "Win"
+msgstr "Выигрыш"
+
+#: tippspiel/templates/tippspiel/bet_form.html:30
+msgid "Automatically update the coefficients."
+msgstr "Автоматическое обновление коэффициентов"
+
+#: tippspiel/templates/tippspiel/bet_form.html:30
+msgid "More"
+msgstr "Подробнее"
+
+#: tippspiel/templates/tippspiel/bet_form.html:31
+msgid "Bet from"
+msgstr "Ставка от"
+
+#: tippspiel/templates/tippspiel/bet_form.html:31
+msgid "to"
+msgstr "до"
+
+#: tippspiel/templates/tippspiel/bet_form.html:63
+#: tippspiel/templates/tippspiel/modules/actual_bids.html:17
+msgid "Unreplayed bets"
+msgstr "Неразыгранные ставки"
+
+#: tippspiel/templates/tippspiel/bet_info.html:8
+#: tippspiel/templates/tippspiel/match_detail.html:3
+msgid "Soccer"
+msgstr "Футбол"
+
+#: tippspiel/templates/tippspiel/bet_info.html:21
+msgid "Bet details"
+msgstr "Информация о ставке"
+
+#: tippspiel/templates/tippspiel/bet_info.html:26
+msgid "Bet"
+msgstr "Ставка"
+
+#: tippspiel/templates/tippspiel/bet_info.html:30
+msgid "Accepted"
+msgstr "Принята"
+
+#: tippspiel/templates/tippspiel/bet_info.html:34
+msgid "State"
+msgstr "Статус"
+
+#: tippspiel/templates/tippspiel/bet_info.html:38
+msgid "Bet type"
+msgstr "Тип ставки"
+
+#: tippspiel/templates/tippspiel/bet_info.html:42
+msgid "Choice"
+msgstr "Выбор"
+
+#: tippspiel/templates/tippspiel/bet_info.html:46
+msgid "Rate"
+msgstr "Коэффициент"
+
+#: tippspiel/templates/tippspiel/bet_info.html:50
+msgid "Bet amount"
+msgstr "Сумма ставки"
+
+#: tippspiel/templates/tippspiel/bet_info.html:54
+msgid "Win amount"
+msgstr "Сумма выигрыша"
+
+#: tippspiel/templates/tippspiel/bet_info.html:58
+msgid "Selling amount"
+msgstr "Продажа ставки"
+
+#: tippspiel/templates/tippspiel/bet_info.html:58
+msgid "Sell"
+msgstr "Продать"
+
+#: tippspiel/templates/tippspiel/bet_info.html:62
+msgid ""
+"The bets are calculated 20 minutes after the actual end of the event, but "
+"not later than 24 hours in case of force majeure."
 msgstr ""
+"Ставка будет рассчитана через 20 минут после конца события, но"
+"не позже чем через 24 часа в исключительных случаях."
+
+#: tippspiel/templates/tippspiel/bet_save.html:15
+msgid "Close"
+msgstr "Закрыть"
+
+#: tippspiel/templates/tippspiel/horisontal_menu.html:12
+msgid "Top matches"
+msgstr "Топ матчей"
+
+#: tippspiel/templates/tippspiel/horisontal_menu.html:18
+msgid "Tournaments"
+msgstr "Турниры"
+
+#: tippspiel/templates/tippspiel/match/matchday_detail_match_started.html:13
+msgid "time"
+msgstr "тайм"
+
+#: tippspiel/templates/tippspiel/modules/actual_bids.html:5
+msgid "In Game"
+msgstr "В игре"
+
+#: tippspiel/templates/tippspiel/modules/actual_bids.html:10
+msgid ""
+"\n"
+"               <p><b>No bids were selected. </b> To select a bet, click the "
+"appropriate odds.</p>\n"
+"            "
+msgstr ""
+"\n"
+"               <p><b>Ставка не выбрана. </b> для выбора ставки кликните "
+"на соответствующий коэффициент.</p>\n"
+"            "
+
+#: tippspiel/templates/tippspiel/search.html:23
+msgid ""
+"               \n"
+"\t\t\t\t\t<p> Enter the name of the event, league or sport in the search "
+"field, for example: </ p>\n"
+"                   <h4> Champions League </ h4>\n"
+"                   <h4> Chelsea </ h4>\n"
+"            "
+msgstr ""
+"               \n"
+"\t\t\t\t\t<p> Ввдите название события, лиги в поле поискаб"
+" например: </ p>\n"
+"                   <h4> Лига чемпионов </ h4>\n"
+"                   <h4> Челси </ h4>\n"
+"            "
+
+
