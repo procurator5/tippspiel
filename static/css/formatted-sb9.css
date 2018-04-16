@@ -6175,49 +6175,6 @@ li.more>.chevron:after {
 	}
 }
 
-.payment-holder .card-holder .card-logo {
-	width: 48px;
-	height: 30px;
-	float: left;
-	margin-left: 10px;
-	margin-top: 5px
-}
-
-.payment-holder .card-holder .card-logo.visa,
-.payment-holder .card-holder .card-logo.visa_electron {
-	background: url("../img/leon/logo-visa.png?t=124") left center no-repeat;
-	background-size: 48px 30px
-}
-
-@media (-webkit-min-device-pixel-ratio: 1.5),
-(min-resolution: 144dpi) {
-	.payment-holder .card-holder .card-logo.visa,
-	.payment-holder .card-holder .card-logo.visa_electron {
-		background-image: url("../img/leon/2x/logo-visa@2x.png?t=124")
-	}
-}
-
-@media (-webkit-min-device-pixel-ratio: 2),
-(min-resolution: 192dpi) {
-	.payment-holder .card-holder .card-logo.visa,
-	.payment-holder .card-holder .card-logo.visa_electron {
-		background-image: url("../img/leon/2x/logo-visa@2x.png?t=124")
-	}
-}
-
-@media (-webkit-min-device-pixel-ratio: 3),
-(min-resolution: 288dpi) {
-	.payment-holder .card-holder .card-logo.visa,
-	.payment-holder .card-holder .card-logo.visa_electron {
-		background-image: url("../img/leon/3x/logo-visa@3x.png?t=124")
-	}
-}
-
-.payment-holder .card-holder .card-logo.master_card {
-	background: url("../img/leon/logo-mastercard.png?t=124") left center no-repeat;
-	background-size: 48px 30px
-}
-
 @media (-webkit-min-device-pixel-ratio: 1.5),
 (min-resolution: 144dpi) {
 	.payment-holder .card-holder .card-logo.master_card {
@@ -6265,11 +6222,6 @@ li.more>.chevron:after {
 	}
 }
 
-.payment-holder .card-holder .card-logo.maestro {
-	background: url("../img/leon/logo-maestro.png?t=124") left center no-repeat;
-	background-size: 48px 30px
-}
-
 @media (-webkit-min-device-pixel-ratio: 1.5),
 (min-resolution: 144dpi) {
 	.payment-holder .card-holder .card-logo.maestro {
@@ -6289,11 +6241,6 @@ li.more>.chevron:after {
 	.payment-holder .card-holder .card-logo.maestro {
 		background-image: url("../img/leon/3x/logo-maestro@3x.png?t=124")
 	}
-}
-
-.payment-holder .card-holder .card-logo.american_express {
-	background: url("../img/leon/logo-amex.png?t=124") left center no-repeat;
-	background-size: 48px 30px
 }
 
 @media (-webkit-min-device-pixel-ratio: 1.5),
@@ -6343,64 +6290,6 @@ li.more>.chevron:after {
 	}
 }
 
-.payment-holder .card-holder .card-info {
-	float: left;
-	margin-left: 10px
-}
-
-.payment-holder .card-holder .card-info.new-card {
-	margin-top: 10px
-}
-
-.payment-holder .card-holder .card-info>span {
-	display: block;
-	line-height: 20px
-}
-
-.payment-holder .card-holder .card-info>span.pan {
-	color: #dfe1e3;
-	font-size: 13px;
-	font-weight: 700;
-	letter-spacing: 1px
-}
-
-.payment-holder .card-holder .card-info>span.exp {
-	font-size: 12px;
-	opacity: 0.5
-}
-
-.payment-holder .card-holder .tsupis-card-info {
-	float: left;
-	margin-left: 10px
-}
-
-.payment-holder .card-holder .tsupis-card-info>span {
-	display: block;
-	line-height: 40px
-}
-
-.payment-holder .card-holder .tsupis-card-info>span.pan {
-	color: #dfe1e3;
-	font-size: 16px;
-	font-weight: 700;
-	letter-spacing: 1px
-}
-
-.payment-holder .card-holder .label-block {
-	display: inline-block;
-	float: left;
-	margin: 9px 0 0 10px
-}
-
-.payment-holder .card-holder .deleteCard {
-	position: absolute;
-	width: 30px;
-	height: 30px;
-	top: 15px;
-	right: 0;
-	background: url("../img/leon/ico-cross.png") center center no-repeat;
-	background-size: 12px 12px
-}
 
 @media (-webkit-min-device-pixel-ratio: 1.5),
 (min-resolution: 144dpi) {
@@ -6449,22 +6338,6 @@ li.more>.chevron:after {
 	}
 }
 
-.payment-holder #add_newcard .transferBlockToogle {
-	display: block;
-	width: 22px;
-	height: 22px;
-	line-height: 22px;
-	vertical-align: middle;
-	cursor: pointer;
-	color: #797d81;
-	text-align: center;
-	margin-right: 5px;
-	overflow: hidden;
-	padding: 0;
-	background: url("../img/leon/ico-radio.png") center center no-repeat;
-	background-size: 17px 17px
-}
-
 @media (-webkit-min-device-pixel-ratio: 1.5),
 (min-resolution: 144dpi) {
 	.payment-holder #add_newcard .transferBlockToogle {
@@ -6510,33 +6383,6 @@ li.more>.chevron:after {
 	.payment-holder #add_newcard .transferBlockToogle.active {
 		background-image: url("../img/leon/3x/ico-radio-active@3x.png")
 	}
-}
-
-.payment-holder #add_newcard .pan {
-	letter-spacing: normal
-}
-
-.payment-holder .transferBlock #transferBlock {
-	padding: 10px 0 0
-}
-
-.payment-holder .transferBlock #transferBlock fieldset {
-	border: 0 none
-}
-
-.payment-holder .transferBlock #transferBlock .cb-label {
-	width: 23px
-}
-
-.payment-holder .transferBlock .bSaveMyCard {
-	color: #797d81;
-	margin: 15px 0 0 !important
-}
-
-.payment-holder .select-payment-holder {
-	display: block;
-	padding-right: 0px;
-	margin-right: 0px
 }
 
 #aboutEvent,
@@ -20441,4 +20287,39 @@ body[data-etype="outright"] .listHolderTitled>li .sport-title {
 
 #slipBox .list li {
 	background-color: transparent
+}
+
+[data-lang="ru"] {
+    background: url(/static/img/lang-ru.png) 5px center no-repeat;
+    background-size: 18px 13px;
+}
+
+[data-lang="en"] {
+    background: url(/static/img/lang-en.png) 5px center no-repeat;
+    background-size: 18px 13px;
+}
+
+#sidemenu>.sidemenu.langSelection>.langSection>.langName {
+    background-position-x: 10px;
+}
+
+[data-lang] {
+    padding-left: 36px !important;
+    background-size: 18px 13px;
+}
+
+#sidemenu>.sidemenu.langSelection>.langselect>li {
+    padding-left: 38.5px !important;
+}
+
+.langSelection>.langselect>li:last-child {
+    border-bottom: 0 none;
+}
+
+.langSelection>.langselect>li {
+    color: #bdc3c9;
+    line-height: 35px;
+    padding-left: 20px !important;
+    font-weight: normal;
+    border: 0;
 }
