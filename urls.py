@@ -16,7 +16,11 @@ urlpatterns = [
         overview,
         name="tippspiel_overview"
     ),
-
+    url(
+        r'^matches/data$',
+        json_data,
+        name="tippspiel_json"
+    ),
     url(
         r'^match/(?P<match_id>\d+)/$',
         match_detail,

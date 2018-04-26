@@ -6013,7 +6013,8 @@ li.more>.chevron:after {
 	width: 120px;
 	height: 40px;
 	background-size: cover;
-	display: block
+	display: block;
+	background-image: url(https://en.bitcoin.it/w/images/en/f/fd/BC_nBG_64px.png);
 }
 
 .payment-holder .nav-bar>.button,

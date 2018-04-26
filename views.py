@@ -8,6 +8,7 @@ from tippspiel.forms import SearchForm
 
 from django import template
 import decimal
+from django.http import JsonResponse
 
 
 register = template.Library()
@@ -167,3 +168,29 @@ def match_detail(request, match_id):
             'matchbets': match.getAllBets(),
         },
     )
+
+def json_data(request):
+    matches = Match.objects.filter(league__is_enabled = True).filter(finished  = False).all().order_by("date")
+    
+    data = {}
+    data["DISPLAY"] = []
+    
+    for match_item in matches:
+        print(match_item.isIntrestingOdds())
+        if match_item.isIntrestingOdds():
+            match = {}
+            match['name'] = match_item.short()
+            match['date'] = match_item.date.strftime("%e %b %H:%M")
+            bets = []
+            for bet_item in match_item.getMainBets():
+                bet = {}
+                bet["group"] = bet_item.bet.bet_group.bet_name
+                bet["name"] = bet_item.bet.bet_choice
+                bet["score"] = bet_item.score
+                bets.append(bet)
+                
+            match["bets"] = bets
+        
+            data["DISPLAY"].append(match)
+                
+    return JsonResponse(data)

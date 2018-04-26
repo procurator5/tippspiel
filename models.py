@@ -104,7 +104,11 @@ class Match(models.Model):
             return None
     
     def __str__(self):
-        return '%s %s %s (%s %s)' % (self.date, self.team_home.name, self.team_visitor.name, self.league.country, self.league.league_name)
+        return '%s %s - %s (%s %s)' % (self.date, self.team_home.name, self.team_visitor.name, self.league.country, self.league.league_name)
+    
+    
+    def short(self):
+        return '%s - %s' % (self.team_home.name, self.team_visitor.name)
     
     # this is not needed if small_image is created at set_image
     def save(self, *args, **kwargs):
@@ -149,6 +153,11 @@ class Match(models.Model):
         for bet in MatchBet.objects.filter(match = self).all():
             bet.calculate()
     
+    def isIntrestingOdds(self):
+        if MatchBet.objects.filter(match = self).filter( score__lte =  1.1 ).filter(bet__bet_group__is_main = True).count() == 3:
+            return True
+        return False
+        
     
 class MatchBet(models.Model):
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
