@@ -176,7 +176,6 @@ def json_data(request):
     data["DISPLAY"] = []
     
     for match_item in matches:
-        print(match_item.isIntrestingOdds())
         if match_item.isIntrestingOdds():
             match = {}
             match['name'] = match_item.short()

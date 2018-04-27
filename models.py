@@ -154,7 +154,7 @@ class Match(models.Model):
             bet.calculate()
     
     def isIntrestingOdds(self):
-        if MatchBet.objects.filter(match = self).filter( score__lte =  1.1 ).filter(bet__bet_group__is_main = True).count() == 3:
+        if MatchBet.objects.filter(match = self).filter( score__gte =  1.1 ).filter(bet__bet_group__is_main = True).count() == 3:
             return True
         return False
         
