@@ -5,7 +5,7 @@ from tippspiel.xmlsoccer import XmlSoccer
 from tippspiel.models import League, Team, Match, MatchBet, MatchBetHelper
 from django.utils import timezone
 from datetime import timedelta
-from bet.settings import XMLSOCCER_DEMO
+from bet.settings import XMLSOCCER_DEMO, XMLSOCCER_MAX_ODDS_INFO
 
 class Loader_Xmlsoccer():
     def __init__(self, api_key, use_demo=True):
@@ -36,6 +36,8 @@ class Loader_Xmlsoccer():
     def LoadMatches(self, startDateString, endDateString):
         # I define current date/time (startDateString) and current date +2 mouths (endDateString)
         matches = self.loader.call_api(method='GetFixturesByDateInterval', startDateString=startDateString, endDateString=endDateString)
+        xml_odds_count = 0
+        
         for match in matches:
             try:
                 try:
@@ -83,8 +85,9 @@ class Loader_Xmlsoccer():
                 
                 row.save()
 
-                if row.needUpdateOdds():
+                if row.needUpdateOdds() and xml_odds_count < XMLSOCCER_MAX_ODDS_INFO :
                     self.loadOddsForMatch(row)
+                    xml_odds_count += 1
                     
                 row.updateOdds()                                    
                 
