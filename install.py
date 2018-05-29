@@ -5,7 +5,7 @@ from tippspiel.xmlsoccer import XmlSoccer
 from tippspiel.models import League, Team, Match, MatchBet, MatchBetHelper
 from django.utils import timezone
 from datetime import timedelta
-import bet.settings
+from bet.settings import XMLSOCCER_DEMO
 
 class Loader_Xmlsoccer():
     def __init__(self, api_key, use_demo=True):
@@ -25,10 +25,11 @@ class Loader_Xmlsoccer():
         teams = self.loader.call_api(method='GetAllTeams')
         for team in teams:
             try:
-                row = Team(name = team['Name'], country = team['Country'], 
-                            handle = team['Name'][:3].upper(),
-                            stadium = team['Stadium'])
-                row.save()
+                if not Team.objects.filter(name = team['Name']).exists():
+                    row = Team(name = team['Name'], country = team['Country'], 
+                                handle = team['Name'][:3].upper(),
+                                stadium = team['Stadium'])
+                    row.save()
             except KeyError:
                 pass
             
@@ -43,8 +44,19 @@ class Loader_Xmlsoccer():
                     row = Match()
                 row.date = match['Date']
                 row.league = League.objects.get(league_name=match['League'])
-                row.team_home = Team.objects.get(name=match['HomeTeam'])
-                row.team_visitor = Team.objects.get(name=match['AwayTeam'])
+                
+                try:
+                    row.team_home = Team.objects.get(name=match['HomeTeam'])
+                except Team.DoesNotExist:
+                    self.LoadTeams()
+                    row.team_home = Team.objects.get(name=match['HomeTeam'])
+                
+                try:
+                    row.team_visitor = Team.objects.get(name=match['AwayTeam'])
+                except Team.DoesNotExist:
+                    self.LoadTeams()
+                    row.team_visitor = Team.objects.get(name=match['AwayTeam'])
+                    
                 row.round = int(match['Round'])
                 row.location = match['Location']
                 row.xmlsoccer_matchid = match['Id']
@@ -64,16 +76,15 @@ class Loader_Xmlsoccer():
                     pass
                 
                 row.save()
+
+                if row.needUpdateOdds():
+                    self.loadOddsForMatch(row)
+                    
+                row.updateOdds()                                    
                 
             except KeyError as e:
-                print(str(e))
-            
-            print(row.id)
-            if row.needUpdateOdds():
-                self.loadOddsForMatch(row)
-                
-            row.updateOdds()                                    
-                            
+                print("Not found json-key: " + str(e))
+                                        
     def clear(self):
         Match.objects.all().delete()
         League.objects.all().delete()
@@ -96,7 +107,7 @@ class Loader_Xmlsoccer():
         saved = False
         odds = self.loader.GetAllOddsByFixtureMatchId(fixtureMatch_Id=match.xmlsoccer_matchid)
         for odd in odds:
-            print(odd)
+            #print(odd)
             for bet in MatchBet.objects.filter(match = match, bet__bet_group__bet_name = odd['Type']).all():
                 try:
                     bethelper = MatchBetHelper()
@@ -120,15 +131,15 @@ class Loader_Xmlsoccer():
             self.LoadMatches(startDateString.isoformat(), endDateString.isoformat())
 
 def install():
-    loader = Loader_Xmlsoccer('UQDWCTZTGRCJQQOSCXEESHVITEDGUYIVUVHYBFDBFOCLEGCATM')
+    loader = Loader_Xmlsoccer('UQDWCTZTGRCJQQOSCXEESHVITEDGUYIVUVHYBFDBFOCLEGCATM',  use_demo=XMLSOCCER_DEMO)
     loader.refreshAll()
     
 def actual():
-    loader = Loader_Xmlsoccer('UQDWCTZTGRCJQQOSCXEESHVITEDGUYIVUVHYBFDBFOCLEGCATM')
+    loader = Loader_Xmlsoccer('UQDWCTZTGRCJQQOSCXEESHVITEDGUYIVUVHYBFDBFOCLEGCATM', use_demo=XMLSOCCER_DEMO)
     loader.loadActualInfo()
 
 def update():
-    loader = Loader_Xmlsoccer('UQDWCTZTGRCJQQOSCXEESHVITEDGUYIVUVHYBFDBFOCLEGCATM')
+    loader = Loader_Xmlsoccer('UQDWCTZTGRCJQQOSCXEESHVITEDGUYIVUVHYBFDBFOCLEGCATM', use_demo=XMLSOCCER_DEMO)
     startDateString = timezone.now().isoformat()
     endDateString = (timezone.now() + timedelta(days=58)).isoformat()   
         
