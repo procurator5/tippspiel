@@ -49,7 +49,9 @@ class Loader_Xmlsoccer():
                     row.team_home = Team.objects.get(name=match['HomeTeam'])
                 except Team.DoesNotExist:
                     self.LoadTeams()
-                    t_team = Team(name=match['HomeTeam'])
+                    t_team = Team(name=match['HomeTeam'], country = '-', 
+                                handle = match['HomeTeam'][:3].upper(),
+                                stadium = '-')
                     t_team.save()
                     row.team_home = Team.objects.get(name=match['HomeTeam'])
                 
@@ -57,7 +59,9 @@ class Loader_Xmlsoccer():
                     row.team_visitor = Team.objects.get(name=match['AwayTeam'])
                 except Team.DoesNotExist:
                     self.LoadTeams()
-                    t_team = Team(name=match['AwayTeam'])
+                    t_team = Team(name=match['AwayTeam'], country = '-', 
+                                handle = match['AwayTeam'][:3].upper(),
+                                stadium = '-')
                     t_team.save()
                     row.team_visitor = Team.objects.get(name=match['AwayTeam'])
                     
