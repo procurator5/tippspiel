@@ -151,13 +151,15 @@ class Match(models.Model):
         return self.wallet.total_balance()
     
     def needUpdateOdds(self):
-        if MatchBet.objects.filter(match = self).filter( Q( update__isnull = True) | Q(update__lte = timezone.now() - timedelta(days=1))).count() == 0 and self.league.is_enabled:
+        if MatchBet.objects.filter(match = self).filter( Q( updated__isnull = True) | Q(updated__lte = timezone.now() - timedelta(days=1))).count() == 0 and self.league.is_enabled:
             return False
         return True
     
     def updateOdds(self):
         for bet in MatchBet.objects.filter(match = self).all():
             bet.calculate()
+        self.updated = timezone.now()
+        self.save()
     
     def isIntrestingOdds(self):
         if MatchBet.objects.filter(match = self).filter( score__gte =  1.1 ).filter(bet__bet_group__is_main = True).count() == 3:
