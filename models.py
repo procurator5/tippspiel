@@ -5,6 +5,7 @@ from django.db import models, connection
 from django.db.models import Q, Min
 from django.utils import timezone
 from bbil.models import Profile
+import logging
 import decimal
 import re
 
@@ -123,13 +124,18 @@ class Match(models.Model):
 
     def closeMatch(self):
         if self.finished ==True:
+            logger = logging.getLogger("Match__closeMatch")
             result = True
+            logger.info("Закрывается матч: " + str(self))
             bank_profile = Profile.objects.filter(user__is_superuser=True).first()
             for tip in Tipp.objects.filter(match=self, state="In Game"):
                 closed = tip.close(bank_profile.wallet)
                 result &= closed
-            if self.wallet.total_balance()>0:
-                self.wallet.send_to_wallet(bank_profile.wallet, self.wallet.total_balance())
+            try:
+                if self.wallet.total_balance()>0:
+                    self.wallet.send_to_wallet(bank_profile.wallet, self.wallet.total_balance())
+            except Wallet.DoesNotExist:
+                logger.error("К матчу "+str(self)+" не привязан кошелек! Проверьте работу bitcoind")
             return result
         return False 
     
