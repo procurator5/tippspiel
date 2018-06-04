@@ -85,11 +85,11 @@ class Loader_Xmlsoccer():
                 
                 row.save()
 
-                if row.needUpdateOdds() and xml_odds_count < XMLSOCCER_MAX_ODDS_INFO :
+                if row.needUpdateOdds() and xml_odds_count < XMLSOCCER_MAX_ODDS_INFO:
+                    print("==> Update match info: " + str(row.id))
                     self.loadOddsForMatch(row)
-                    xml_odds_count += 1
-                    
-                row.updateOdds()                                    
+                    xml_odds_count += 1                    
+                    row.updateOdds()                                    
                 
             except KeyError as e:
                 print("Not found json-key: " + str(e))
@@ -113,10 +113,9 @@ class Loader_Xmlsoccer():
         return True if str.upper() == "TRUE" else False
     
     def loadOddsForMatch(self, match):
-        saved = False
         odds = self.loader.GetAllOddsByFixtureMatchId(fixtureMatch_Id=match.xmlsoccer_matchid)
+        print(odds)
         for odd in odds:
-            #print(odd)
             for bet in MatchBet.objects.filter(match = match, bet__bet_group__bet_name = odd['Type']).all():
                 try:
                     bethelper = MatchBetHelper()
@@ -125,11 +124,9 @@ class Loader_Xmlsoccer():
                     bethelper.score = float(odd[bet.bet.xmlsoccer_tagname])
                     bethelper.matchbet=bet
                     bethelper.save()
-                    saved=True
                 except KeyError:
                     pass
-        if saved:
-            MatchBet.objects.filter(match=match).update(update=timezone.now())
+        
 
     def loadActualInfo(self):        
         #startDateString  = Match.objects.filter(finished = False).all().aggregate(Min('date'))['date__min']

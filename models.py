@@ -151,9 +151,9 @@ class Match(models.Model):
         return self.wallet.total_balance()
     
     def needUpdateOdds(self):
-        if MatchBet.objects.filter(match = self).filter( Q( updated__isnull = True) | Q(updated__lte = timezone.now() - timedelta(days=1))).count() == 0 and self.league.is_enabled:
-            return False
-        return True
+        if MatchBet.objects.filter(match = self).filter( match__updated__lte = timezone.now() - timedelta(days=1)).count() > 0 and self.league.is_enabled:
+            return True
+        return False
     
     def updateOdds(self):
         for bet in MatchBet.objects.filter(match = self).all():

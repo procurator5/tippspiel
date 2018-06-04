@@ -99,6 +99,7 @@ class XmlSoccer(object):
             address = self.service_address + "GetAllOddsByFixtureMatchId"
         else:
             address = self.demo_address + "GetAllOddsByFixtureMatchId"
+            
         # create the request parameters
         params = dict()
         params['ApiKey'] = self.api_key
@@ -111,7 +112,7 @@ class XmlSoccer(object):
             r = requests.get(address, params=params)
             # parse the xml
             root = etree.XML(r.text.encode('utf-8'))
-
+            
                             
             if len(root) == 0:
                 raise(Exception(root.text))
