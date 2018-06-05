@@ -114,13 +114,12 @@ class Loader_Xmlsoccer():
     
     def loadOddsForMatch(self, match):
         odds = self.loader.GetAllOddsByFixtureMatchId(fixtureMatch_Id=match.xmlsoccer_matchid)
-        print(odds)
         for odd in odds:
             for bet in MatchBet.objects.filter(match = match, bet__bet_group__bet_name = odd['Type']).all():
                 try:
                     bethelper = MatchBetHelper()
                     bethelper.bookmaker = odd["Bookmaker"]
-                    bethelper.updated=odd['UpdatedDate']
+                    #bethelper.updated=odd['UpdatedDate']
                     bethelper.score = float(odd[bet.bet.xmlsoccer_tagname])
                     bethelper.matchbet=bet
                     bethelper.save()

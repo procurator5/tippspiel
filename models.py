@@ -151,7 +151,7 @@ class Match(models.Model):
         return self.wallet.total_balance()
     
     def needUpdateOdds(self):
-        if MatchBet.objects.filter(match = self).filter( match__updated__lte = timezone.now() - timedelta(days=1)).count() > 0 and self.league.is_enabled:
+        if MatchBet.objects.filter(match = self).filter( match__updated__lte = timezone.now() - timedelta(days=1)).filter( match__date__lte = timezone.now() + timedelta(days=14)).count() > 0 and self.league.is_enabled:
             return True
         return False
     
@@ -209,7 +209,7 @@ class MatchBet(models.Model):
 class MatchBetHelper(models.Model):
     matchbet = models.ForeignKey(MatchBet, on_delete=models.CASCADE)
     bookmaker = models.CharField(max_length=64)    
-    updated = models.DateTimeField(null=True)
+    updated = models.DateTimeField(default=timezone.now)
     score = models.FloatField(default=0)
     
 class Tipp(models.Model):
