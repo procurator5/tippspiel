@@ -1,5 +1,5 @@
 from django.contrib import admin
-from tippspiel.models import Match, Tipp, MatchBet
+from tippspiel.models import Match, Tipp, MatchBet, League
 
 class MatchBetInline(admin.TabularInline):
     model = MatchBet
@@ -15,3 +15,10 @@ class MatchAdmin(admin.ModelAdmin):
 
 admin.site.register(Match, MatchAdmin)
 admin.site.register(Tipp)
+
+
+class LeagueAdmin(admin.ModelAdmin):
+    list_display =('league_name', 'country', 'is_enabled')
+    list_editable = ('is_enabled',)
+
+admin.site.register(League, LeagueAdmin)
