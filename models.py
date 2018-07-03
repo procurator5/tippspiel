@@ -71,7 +71,7 @@ class Match(models.Model):
     matchday = models.IntegerField(default=0)
     team_home = models.ForeignKey(Team, related_name='+', on_delete=models.DO_NOTHING)
     team_visitor = models.ForeignKey(Team, related_name='+', on_delete=models.DO_NOTHING)
-    round = models.IntegerField(default=1)
+    round = models.CharField(default='1', max_length=64)
     location = models.CharField(max_length=128, null=True)
     score_home = models.IntegerField(default=0)
     score_visitor = models.IntegerField(default=0)
@@ -113,7 +113,9 @@ class Match(models.Model):
     
     # this is not needed if small_image is created at set_image
     def save(self, *args, **kwargs):
-        self.wallet, created = Wallet.objects.get_or_create(label=self.team_home.name+"-"+self.team_visitor.name)
+        str_wallet = self.date + self.team_home.handle+"-"+self.team_visitor.handle
+        str_wallet = str_wallet[:45]
+        self.wallet, created = Wallet.objects.get_or_create(label=str_wallet)
         self.content = self.__str__()
         super(Match, self).save(*args, **kwargs)
         # I write bets coefficients in table 

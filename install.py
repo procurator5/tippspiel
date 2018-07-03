@@ -65,7 +65,12 @@ class Loader_Xmlsoccer():
                     t_team.save()
                     row.team_visitor = Team.objects.get(name=match['AwayTeam'])
                     
-                row.round = int(match['Round'])
+                try:
+                    row.round = match['Round']
+                except KeyError as e:
+                    if str(e) == 'Round':
+                       row.round = match['Group']
+
                 row.location = match['Location']
                 row.xmlsoccer_matchid = match['Id']
                 
