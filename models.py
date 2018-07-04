@@ -113,7 +113,7 @@ class Match(models.Model):
     
     # this is not needed if small_image is created at set_image
     def save(self, *args, **kwargs):
-        str_wallet = self.date + self.team_home.handle+"-"+self.team_visitor.handle
+        str_wallet = '%s-%s' % (self.team_home.handle, self.team_visitor.handle)
         str_wallet = str_wallet[:45]
         self.wallet, created = Wallet.objects.get_or_create(label=str_wallet)
         self.content = self.__str__()
