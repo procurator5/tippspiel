@@ -79,7 +79,7 @@ class Loader_Xmlsoccer():
                     row.score_visitor = match['AwayGoals']
                     row.timeinfo = match['Time']
                 
-                    if match['Time'] == 'Finished':
+                    if match['Time'] == 'Finished' or match['Time'] == 'Finished (Added penalty)':
                         if row.finished == False:
                             row.finished = True
                             closed = row.closeMatch()
